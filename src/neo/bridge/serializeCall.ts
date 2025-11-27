@@ -1,5 +1,5 @@
 import { MessageBridge } from "@bane-labs/bridge-sdk-ts";
-import { createMessageBridgeFromEnvironment, ensureEnv } from "./utils";
+import { createMessageBridgeFromEnvironment, ensureEnv } from "../utils";
 
 async function serializeIsPausedCall(messageBridge: MessageBridge) {
     const contractHash = process.env.MESSAGE_BRIDGE_CONTRACT_HASH;

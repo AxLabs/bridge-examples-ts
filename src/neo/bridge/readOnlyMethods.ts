@@ -1,5 +1,5 @@
 import { MessageBridge } from "@bane-labs/bridge-sdk-ts";
-import { ensureEnv } from "./utils";
+import { ensureEnv } from "../utils";
 
 export async function callReadOnlyMethods(messageBridge: MessageBridge) {
     console.log("\n--- Testing Read-Only Methods ---");
@@ -100,7 +100,7 @@ export async function callReadOnlyMethods(messageBridge: MessageBridge) {
 
 (async () => {
     ensureEnv();
-    const {createMessageBridgeFromEnvironment} = await import("./utils");
+    const {createMessageBridgeFromEnvironment} = await import("../utils");
     const messageBridge = await createMessageBridgeFromEnvironment();
     await callReadOnlyMethods(messageBridge);
 })();

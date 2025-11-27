@@ -5,7 +5,7 @@ import {
     type SendResultMessageParams,
     type SendStoreOnlyMessageParams
 } from "@bane-labs/bridge-sdk-ts";
-import { createMessageBridgeFromEnvironment, ensureEnv } from "./utils";
+import { createMessageBridgeFromEnvironment, ensureEnv } from "../utils";
 
 async function sendExecutableMessage(messageBridge: MessageBridge) {
     const messageData = process.env.MESSAGE_EXECUTABLE_DATA;

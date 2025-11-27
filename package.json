@@ -2,18 +2,18 @@
   "name": "typescript-examples",
   "version": "1.0.0",
   "description": "Examples of how to interact with the MessageBridge in TS",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Otniel Nicola",
   "type": "module",
   "scripts": {
-    "example:serialize": "tsx serializeCall.ts",
-    "example:wallet": "tsx walletOperations.ts",
-    "example:execute": "tsx executeMessage.ts",
-    "example:send-excutable": "MESSAGE_BRIDGE_OPERATION=send-executable tsx sendMessage.ts",
-    "example:send-result": "MESSAGE_BRIDGE_OPERATION=send-result tsx sendMessage.ts",
-    "example:send-store-only": "MESSAGE_BRIDGE_OPERATION=send-store-only tsx sendMessage.ts",
-    "example:readonly": "tsx readOnlyMethods.ts",
-    "example:pause": "tsx performAllPauseOperations.ts"
+    "example:serialize": "tsx src/neo/bridge/serializeCall.ts",
+    "example:wallet": "tsx src/neo/wallet/walletOperations.ts",
+    "example:execute": "tsx src/neo/bridge/executeMessage.ts",
+    "example:send-excutable": "MESSAGE_BRIDGE_OPERATION=send-executable tsx src/neo/bridge/sendMessage.ts",
+    "example:send-result": "MESSAGE_BRIDGE_OPERATION=send-result tsx src/neo/bridge/sendMessage.ts",
+    "example:send-store-only": "MESSAGE_BRIDGE_OPERATION=send-store-only tsx src/neo/bridge/sendMessage.ts",
+    "example:readonly": "tsx src/neo/bridge/readOnlyMethods.ts",
+    "example:pause": "tsx src/neo/bridge/performAllPauseOperations.ts"
   },
   "dependencies": {
     "@bane-labs/bridge-sdk-ts": "^1.0.0-beta.1",

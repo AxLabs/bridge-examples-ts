@@ -1,5 +1,5 @@
 import { MessageBridge } from "@bane-labs/bridge-sdk-ts";
-import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "./utils";
+import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
 async function executeMessage(messageBridge: MessageBridge) {
     const nonce = process.env.MESSAGE_NONCE;

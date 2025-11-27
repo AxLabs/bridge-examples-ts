@@ -1,5 +1,5 @@
 import { MessageBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
-import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "./utils";
+import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
 async function performAllPauseOperations(messageBridge: MessageBridge) {
     console.log("\n--- Testing All Pause/Unpause Operations ---");
