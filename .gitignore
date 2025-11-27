@@ -1,0 +1,6 @@
+*.iml
+**/*.idea
+**/*node_modules
+personal.json
+copilot-instructions.md
+.env
