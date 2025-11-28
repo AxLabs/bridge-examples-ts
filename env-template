@@ -12,5 +12,5 @@ MESSAGE_STORE_ONLY_DATA=Hello from Neon3!
 MESSAGE_NONCE=1 #also used for getter methods
 
 # pausing will only work if this is the governor account
-WALLET_PATH=../../neon3-funding/neon3-wallets/personal.json
+WALLET_PATH=../neon3-funding/neon3-wallets/personal.json
 WALLET_PASSWORD=
