@@ -6,17 +6,27 @@
   "author": "Otniel Nicola",
   "type": "module",
   "scripts": {
-    "example:serialize": "tsx src/neo/bridge/serializeCall.ts",
-    "example:wallet": "tsx src/neo/wallet/walletOperations.ts",
-    "example:execute": "tsx src/neo/bridge/executeMessage.ts",
-    "example:send-excutable": "MESSAGE_BRIDGE_OPERATION=send-executable tsx src/neo/bridge/sendMessage.ts",
-    "example:send-result": "MESSAGE_BRIDGE_OPERATION=send-result tsx src/neo/bridge/sendMessage.ts",
-    "example:send-store-only": "MESSAGE_BRIDGE_OPERATION=send-store-only tsx src/neo/bridge/sendMessage.ts",
-    "example:readonly": "tsx src/neo/bridge/readOnlyMethods.ts",
-    "example:pause": "tsx src/neo/bridge/performAllPauseOperations.ts"
+    "amb:serialize": "tsx src/neo/message-bridge/serializeCall.ts",
+    "amb:execute": "tsx src/neo/message-bridge/executeMessage.ts",
+    "amb:send-excutable": "MESSAGE_BRIDGE_OPERATION=send-executable tsx src/neo/message-bridge/sendMessage.ts",
+    "amb:send-result": "MESSAGE_BRIDGE_OPERATION=send-result tsx src/neo/message-bridge/sendMessage.ts",
+    "amb:send-store-only": "MESSAGE_BRIDGE_OPERATION=send-store-only tsx src/neo/message-bridge/sendMessage.ts",
+    "amb:set-executor": "tsx src/neo/message-bridge/setExecutionManager.ts",
+    "amb:readonly": "tsx src/neo/message-bridge/readOnlyMethods.ts",
+    "amb:pause": "tsx src/neo/message-bridge/performAllPauseOperations.ts",
+    "mgmt:readonly": "tsx src/neo/management/readOnlyMethods.ts",
+    "mgmt:validator-add": "VALIDATOR_ACTION=add tsx src/neo/management/validatorManagement.ts",
+    "mgmt:validator-remove": "VALIDATOR_ACTION=remove tsx src/neo/management/validatorManagement.ts",
+    "mgmt:validator-replace": "VALIDATOR_ACTION=replace tsx src/neo/management/validatorManagement.ts",
+    "mgmt:validator-threshold": "VALIDATOR_ACTION=set-threshold tsx src/neo/management/validatorManagement.ts",
+    "mgmt:set-owner": "MANAGEMENT_ACTION=set-owner tsx src/neo/management/ownerRelayerGovernor.ts",
+    "mgmt:set-relayer": "MANAGEMENT_ACTION=set-relayer tsx src/neo/management/ownerRelayerGovernor.ts",
+    "mgmt:set-governor": "MANAGEMENT_ACTION=set-governor tsx src/neo/management/ownerRelayerGovernor.ts",
+    "mgmt:set-security": "MANAGEMENT_ACTION=set-security-guard tsx src/neo/management/ownerRelayerGovernor.ts",
+    "wallet": "tsx src/neo/wallet/walletOperations.ts"
   },
   "dependencies": {
-    "@bane-labs/bridge-sdk-ts": "^1.0.0-beta.1",
+    "@bane-labs/bridge-sdk-ts": "^1.0.0-beta.3",
     "dotenv": "^17.2.3"
   },
   "devDependencies": {

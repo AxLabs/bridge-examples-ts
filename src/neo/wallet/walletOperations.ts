@@ -22,12 +22,32 @@ export async function testWalletOperations() {
                 const firstAccount = walletInstance.accounts[0];
                 console.log("First account address:", firstAccount.address);
                 console.log("Is valid address:", neonAdapter.is.address(firstAccount.address));
+                if (firstAccount.publicKey) {
+                    console.log("First account public key:", firstAccount.publicKey);
+                } else {
+                    console.log("First account public key not available.");
+                }
+                if (firstAccount.scriptHash) {
+                    console.log("First account scripthash:", firstAccount.scriptHash);
+                } else {
+                    console.log("First account scripthash not available.");
+                }
             }
             if (walletPassword || walletPassword === "") {
                 const account = await createDecryptedAccountFromWalletFile(walletPath, walletPassword);
                 if (account) {
                     console.log("Decrypted account address:", account.address);
                     console.log("Private key (WIF) available:", !!account.tryGet('WIF'));
+                    if (account.publicKey) {
+                        console.log("Decrypted account public key:", account.publicKey);
+                    } else {
+                        console.log("Decrypted account public key not available.");
+                    }
+                    if (account.scriptHash) {
+                        console.log("Decrypted account scripthash:", account.scriptHash);
+                    } else {
+                        console.log("Decrypted account scripthash not available.");
+                    }
                 } else {
                     console.log("No decrypted account found in wallet file.");
                 }
@@ -36,6 +56,16 @@ export async function testWalletOperations() {
                 if (account) {
                     console.log("Account address:", account.address);
                     console.log("Account is encrypted:", !!account.tryGet('encrypted'));
+                    if (account.publicKey) {
+                        console.log("Account public key:", account.publicKey);
+                    } else {
+                        console.log("Account public key not available.");
+                    }
+                    if (account.scriptHash) {
+                        console.log("Account scripthash:", account.scriptHash);
+                    } else {
+                        console.log("Account scripthash not available.");
+                    }
                 } else {
                     console.log("No account found in wallet file.");
                 }

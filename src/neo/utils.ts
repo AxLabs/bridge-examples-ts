@@ -4,6 +4,7 @@ import {
     createAccountFromWalletFile,
     createDecryptedAccountFromWalletFile,
     GenericError,
+    BridgeManagement,
     MessageBridge
 } from "@bane-labs/bridge-sdk-ts";
 import dotenv from "dotenv";
@@ -55,6 +56,30 @@ export async function createMessageBridgeFromEnvironment(): Promise<MessageBridg
     };
 
     return new MessageBridge(config);
+}
+
+export async function createManagementFromEnv(): Promise<BridgeManagement> {
+    const contractHash = process.env.BRIDGE_MANAGEMENT_CONTRACT_HASH;
+    const rpcUrl = process.env.NEO_NODE_URL;
+    const walletPath = process.env.WALLET_PATH;
+    const walletPassword = process.env.WALLET_PASSWORD || '';
+
+    if (!contractHash) {
+        throw new GenericError('BRIDGE_MANAGEMENT_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+    }
+    if (!rpcUrl) {
+        throw new GenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
+    }
+    if (!walletPath) {
+        throw new GenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
+    }
+
+    const account = await createDecryptedAccountFromWalletFile(walletPath, walletPassword);
+    if (!account) {
+        throw new GenericError('Failed to load account from wallet file.', 'ACCOUNT_LOAD_FAILED');
+    }
+    const config = {contractHash, rpcUrl, account};
+    return new BridgeManagement(config);
 }
 
 export function waitForStateUpdate(waitMs: number = 1000): Promise<void> {
