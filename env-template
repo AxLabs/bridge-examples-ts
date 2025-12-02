@@ -4,6 +4,7 @@ NEO_NODE_URL=http://localhost:40332
 MESSAGE_BRIDGE_CONTRACT_HASH=bd98300a1951d72533fa749010265f71c4cfff38
 BRIDGE_MANAGEMENT_CONTRACT_HASH=f0e6bccc463fa39fb21c4d0b69c2c279cd3d12d9
 EXECUTION_MANAGER_ADDRESS=a4cda6c7b19c7e06ad702f1bc7e20ecc21e0a050
+NATIVE_TOKEN_BRIDGE_CONTRACT_HASH=0x356376dcd5580f49f8b4d1274745ac55ad858784
 
 # Validator public keys
 VALIDATOR_PUBLIC_KEY=0x02a0150e31043503248d2e3cb1e55011062d19a02a2da82f3cb55d9a1b967a601d
@@ -27,6 +28,57 @@ MESSAGE_STORE_ONLY_DATA=Hello from Neon3!
 
 # MESSAGE_BRIDGE_OPERATION=send-result
 MESSAGE_NONCE=1 #also used for getter methods
+
+# Execution Manager Operations
+EXECUTABLE_CODE=0x41 # Executable code for message execution (default: 0x41)
+SERIALIZE_TARGET=... # Target contract hash for serialization (defaults to MESSAGE_BRIDGE_CONTRACT_HASH)
+SERIALIZE_METHOD=isPaused # Method name for serialization (default: isPaused)
+SERIALIZE_CALL_FLAGS=0 # Call flags for serialization (default: 0)
+
+# Native Token Bridge Operations
+# NATIVE_OPERATION=set-native-bridge|deposit-native|claim-native|pause-native|unpause-native|set-native-fee|set-native-min|set-native-max|set-native-total
+NATIVE_TOKEN_ADDRESS=... # Token address for native bridge
+NATIVE_DECIMALS_LINKED_CHAIN=18 # Decimals on linked chain (default: 18)
+NATIVE_DEPOSIT_FEE=0 # Deposit fee (default: 0)
+NATIVE_MIN_AMOUNT=1000000 # Minimum amount (default: 1000000)
+NATIVE_MAX_AMOUNT=1000000000000 # Maximum amount (default: 1000000000000)
+NATIVE_MAX_WITHDRAWALS=1000 # Maximum withdrawals (default: 1000)
+NATIVE_MAX_TOTAL_DEPOSITED=10000000000000 # Maximum total deposited (default: 10000000000000)
+NATIVE_FROM_ADDRESS=... # From address for native deposit
+NATIVE_TO_ADDRESS=... # To address for native deposit
+NATIVE_AMOUNT=... # Amount for native deposit
+NATIVE_MAX_FEE=... # Maximum fee for native deposit
+NATIVE_FEE_SPONSOR=... # Fee sponsor address (optional)
+NATIVE_CLAIM_NONCE=... # Nonce for native claim
+NEW_NATIVE_DEPOSIT_FEE=... # New native deposit fee
+NEW_MIN_NATIVE_DEPOSIT=... # New minimum native deposit
+NEW_MAX_NATIVE_DEPOSIT=... # New maximum native deposit
+NEW_MAX_TOTAL_DEPOSITED_NATIVE=... # New maximum total deposited native
+
+# Token Bridge Operations
+# TOKEN_OPERATION=register-token|deposit-token|claim-token|pause-token|unpause-token|set-token-fee|set-token-min|set-token-max|set-token-withdrawals
+TOKEN_ADDRESS=... # Token address
+
+# Token registration configuration
+TOKEN_DECIMALS_LINKED_CHAIN=18 # Decimals on linked chain (default: 18)
+TOKEN_DEPOSIT_FEE=0 # Initial deposit fee (default: 0)
+TOKEN_MIN_DEPOSIT=1000000 # Initial minimum deposit (default: 1000000)
+TOKEN_MAX_DEPOSIT=1000000000000 # Initial maximum deposit (default: 1000000000000)
+TOKEN_MAX_WITHDRAWALS=1000 # Initial maximum withdrawals (default: 1000)
+
+# Token deposit/claim configuration
+TOKEN_FROM_ADDRESS=... # From address for token deposit
+TOKEN_TO_ADDRESS=... # To address for token deposit
+TOKEN_AMOUNT=... # Amount for token deposit
+TOKEN_MAX_FEE=... # Maximum fee for token deposit
+TOKEN_FEE_SPONSOR=... # Fee sponsor address (optional)
+TOKEN_CLAIM_NONCE=... # Nonce for token claim
+
+# Token bridge parameter updates
+NEW_TOKEN_DEPOSIT_FEE=... # New token deposit fee
+NEW_MIN_TOKEN_DEPOSIT=... # New minimum token deposit
+NEW_MAX_TOKEN_DEPOSIT=... # New maximum token deposit
+NEW_MAX_TOKEN_WITHDRAWALS=... # New maximum token withdrawals
 
 # pausing will only work if this is the governor account
 # changing validator will only work if this is the owner account

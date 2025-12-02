@@ -1,9 +1,9 @@
-import { createManagementFromEnv, ensureEnv } from "../utils";
+import { createManagementFromEnvironment, ensureEnv } from "../utils";
 
 async function main() {
     const action = process.env.VALIDATOR_ACTION;
 
-    const management = await createManagementFromEnv();
+    const management = await createManagementFromEnvironment();
 
     switch (action) {
         case 'add': {

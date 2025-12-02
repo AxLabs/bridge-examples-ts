@@ -34,19 +34,17 @@ async function serializeCallExamples(executionManager: ExecutionManager) {
 
         console.log("\n--- Testing with parameters ---");
 
-        const methodWithParams = process.env.SERIALIZE_METHOD_WITH_PARAMS || 'executeMessage';
-        const testNonce = process.env.MESSAGE_NONCE ? parseInt(process.env.MESSAGE_NONCE, 10) : 1;
-        const testExecutableCode = process.env.EXECUTABLE_CODE || "0x41";
+        const methodWithParams = 'executeMessage';
+        const testNonce = 1;
 
         console.log(`Method with params: ${methodWithParams}`);
         console.log(`Test nonce: ${testNonce}`);
-        console.log(`Test executable code: ${testExecutableCode}`);
 
         const serializedCallWithParams = await executionManager.serializeCall(
             target,
             methodWithParams,
             callFlags,
-            [testNonce, testExecutableCode]
+            [testNonce]
         );
 
         console.log(`Serialized call with params: ${serializedCallWithParams}`);

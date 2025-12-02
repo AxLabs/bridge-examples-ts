@@ -1,7 +1,7 @@
-import { createManagementFromEnv, ensureEnv } from "../utils";
+import { createManagementFromEnvironment, ensureEnv } from "../utils";
 
 async function main() {
-    const management = await createManagementFromEnv();
+    const management = await createManagementFromEnvironment();
 
     console.log('Owner:', await management.owner());
     console.log('Relayer:', await management.relayer());
