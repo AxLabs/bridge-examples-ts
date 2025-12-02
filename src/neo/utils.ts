@@ -5,7 +5,8 @@ import {
     createDecryptedAccountFromWalletFile,
     GenericError,
     BridgeManagement,
-    MessageBridge
+    MessageBridge,
+    ExecutionManager
 } from "@bane-labs/bridge-sdk-ts";
 import dotenv from "dotenv";
 
@@ -56,6 +57,51 @@ export async function createMessageBridgeFromEnvironment(): Promise<MessageBridg
     };
 
     return new MessageBridge(config);
+}
+
+export async function createExecutionManagerFromEnvironment(): Promise<ExecutionManager> {
+    const contractHash = process.env.EXECUTION_MANAGER_CONTRACT_HASH;
+    if (!contractHash) {
+        throw new GenericError('EXECUTION_MANAGER_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+    }
+
+    const walletPath = process.env.WALLET_PATH;
+    if (!walletPath) {
+        throw new GenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
+    }
+
+    const walletPassword = process.env.WALLET_PASSWORD || '';
+    const rpcUrl = process.env.NEO_NODE_URL;
+
+    let account: Account | null;
+    if (walletPassword || walletPassword === "") {
+        account = await createDecryptedAccountFromWalletFile(walletPath, walletPassword);
+    } else {
+        account = createAccountFromWalletFile(walletPath);
+
+        if (account && (account.tryGet("encrypted") || account.tryGet("WIF"))) {
+            throw new GenericError(
+                'Wallet contains encrypted private key but no WALLET_PASSWORD environment variable provided. Please set WALLET_PASSWORD to decrypt the wallet.',
+                'ENCRYPTED_WALLET_NO_PASSWORD'
+            );
+        }
+    }
+
+    if (!account) {
+        throw new GenericError('Failed to load account from wallet file', 'ACCOUNT_LOAD_FAILED');
+    }
+
+    if (!rpcUrl) {
+        throw new GenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
+    }
+
+    const config: ContractWrapperConfig = {
+        contractHash,
+        rpcUrl,
+        account
+    };
+
+    return new ExecutionManager(config);
 }
 
 export async function createManagementFromEnv(): Promise<BridgeManagement> {
