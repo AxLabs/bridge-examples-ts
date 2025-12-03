@@ -12,11 +12,10 @@
  * Usage:
  *   npm run ntb:readonly
  */
-
-import { NeoXBridge } from "@bane-labs/bridge-sdk-ts/dist/neo/contracts/neo-x-bridge.js";
 import { createNativeTokenBridgeFromEnvironment, ensureEnv } from "../utils";
+import { NativeTokenBridge } from "@bane-labs/bridge-sdk-ts";
 
-export async function callReadOnlyMethods(neoXBridge: NeoXBridge) {
+export async function callReadOnlyMethods(neoXBridge: NativeTokenBridge) {
     console.log("\n--- Testing NeoX Bridge Read-Only Methods ---");
 
     try {
@@ -87,7 +86,7 @@ export async function callReadOnlyMethods(neoXBridge: NeoXBridge) {
                 const tokenAddress = typeof token === 'string' ? token : token.token;
                 try {
                     const tokenBridge = await neoXBridge.getTokenBridge(tokenAddress);
-                    console.log(`    Bridge Config: ${JSON.stringify(tokenBridge)}`);
+                    console.log(`    Bridge Config: ${JSON.stringify(tokenBridge, null, 2)}`);
 
                     const tokenDepositFee = await neoXBridge.tokenDepositFee(tokenAddress);
                     console.log(`    Deposit Fee: ${tokenDepositFee}`);

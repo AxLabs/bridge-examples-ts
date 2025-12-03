@@ -1,7 +1,8 @@
-import { NeoXBridge } from "@bane-labs/bridge-sdk-ts/dist/neo/contracts/neo-x-bridge.js";
-import { createNativeTokenBridgeFromEnvironment, ensureEnv } from "../utils";
 
-async function nativeBridgeOperations(neoXBridge: NeoXBridge) {
+import { createNativeTokenBridgeFromEnvironment, ensureEnv } from "../utils";
+import { NativeTokenBridge } from "@bane-labs/bridge-sdk-ts";
+
+async function nativeBridgeOperations(neoXBridge: NativeTokenBridge) {
     const operation = process.env.NATIVE_OPERATION;
     if (!operation) {
         console.error("Set NATIVE_OPERATION environment variable to specify operation.");
@@ -41,11 +42,11 @@ async function nativeBridgeOperations(neoXBridge: NeoXBridge) {
                 console.error(`Unknown operation: ${operation}`);
         }
     } catch (error) {
-        console.error(`Failed to execute ${operation}:`, error instanceof Error ? error.message : error);
+        console.error(`Failed to execute ${operation}:`, error);
     }
 }
 
-async function setNativeBridge(neoXBridge: NeoXBridge) {
+async function setNativeBridge(neoXBridge: NativeTokenBridge) {
     const tokenForNativeBridge = process.env.NATIVE_TOKEN_ADDRESS;
     if (!tokenForNativeBridge) {
         throw new Error('NATIVE_TOKEN_ADDRESS environment variable is required');
@@ -78,8 +79,8 @@ async function setNativeBridge(neoXBridge: NeoXBridge) {
     console.log(`Native bridge set. Transaction: ${result.txHash}`);
 }
 
-async function depositNative(neoXBridge: NeoXBridge) {
-    const from = process.env.NATIVE_FROM_ADDRESS;
+async function depositNative(neoXBridge: NativeTokenBridge) {
+    const from = neoXBridge.getConfig().account.scriptHash;
     const to = process.env.NATIVE_TO_ADDRESS;
     const amount = process.env.NATIVE_AMOUNT;
     const maxFee = process.env.NATIVE_MAX_FEE;
@@ -90,7 +91,7 @@ async function depositNative(neoXBridge: NeoXBridge) {
 
     const amountValue = parseInt(amount, 10);
     const maxFeeValue = parseInt(maxFee, 10);
-    const feeSponsor = process.env.NATIVE_FEE_SPONSOR || undefined;
+    const feeSponsor = from;
 
     console.log(`Depositing native tokens from: ${from} to: ${to}`);
     console.log(`Amount: ${amountValue}, Max fee: ${maxFeeValue}`);
@@ -102,7 +103,7 @@ async function depositNative(neoXBridge: NeoXBridge) {
     console.log(`Native deposit completed. Transaction: ${result.txHash}`);
 }
 
-async function claimNative(neoXBridge: NeoXBridge) {
+async function claimNative(neoXBridge: NativeTokenBridge) {
     const nonce = process.env.NATIVE_CLAIM_NONCE;
     if (!nonce) {
         throw new Error('NATIVE_CLAIM_NONCE environment variable is required');
@@ -115,19 +116,19 @@ async function claimNative(neoXBridge: NeoXBridge) {
     console.log(`Native claim completed. Transaction: ${result.txHash}`);
 }
 
-async function pauseNativeBridge(neoXBridge: NeoXBridge) {
+async function pauseNativeBridge(neoXBridge: NativeTokenBridge) {
     console.log('Pausing native bridge...');
     const result = await neoXBridge.pauseNativeBridge();
     console.log(`Native bridge paused. Transaction: ${result.txHash}`);
 }
 
-async function unpauseNativeBridge(neoXBridge: NeoXBridge) {
+async function unpauseNativeBridge(neoXBridge: NativeTokenBridge) {
     console.log('Unpausing native bridge...');
     const result = await neoXBridge.unpauseNativeBridge();
     console.log(`Native bridge unpaused. Transaction: ${result.txHash}`);
 }
 
-async function setNativeDepositFee(neoXBridge: NeoXBridge) {
+async function setNativeDepositFee(neoXBridge: NativeTokenBridge) {
     const newFee = process.env.NEW_NATIVE_DEPOSIT_FEE;
     if (!newFee) {
         throw new Error('NEW_NATIVE_DEPOSIT_FEE environment variable is required');
@@ -140,7 +141,7 @@ async function setNativeDepositFee(neoXBridge: NeoXBridge) {
     console.log(`Native deposit fee updated. Transaction: ${result.txHash}`);
 }
 
-async function setMinNativeDeposit(neoXBridge: NeoXBridge) {
+async function setMinNativeDeposit(neoXBridge: NativeTokenBridge) {
     const newMinAmount = process.env.NEW_MIN_NATIVE_DEPOSIT;
     if (!newMinAmount) {
         throw new Error('NEW_MIN_NATIVE_DEPOSIT environment variable is required');
@@ -153,7 +154,7 @@ async function setMinNativeDeposit(neoXBridge: NeoXBridge) {
     console.log(`Minimum native deposit updated. Transaction: ${result.txHash}`);
 }
 
-async function setMaxNativeDeposit(neoXBridge: NeoXBridge) {
+async function setMaxNativeDeposit(neoXBridge: NativeTokenBridge) {
     const newMaxAmount = process.env.NEW_MAX_NATIVE_DEPOSIT;
     if (!newMaxAmount) {
         throw new Error('NEW_MAX_NATIVE_DEPOSIT environment variable is required');
@@ -166,7 +167,7 @@ async function setMaxNativeDeposit(neoXBridge: NeoXBridge) {
     console.log(`Maximum native deposit updated. Transaction: ${result.txHash}`);
 }
 
-async function setMaxTotalDepositedNative(neoXBridge: NeoXBridge) {
+async function setMaxTotalDepositedNative(neoXBridge: NativeTokenBridge) {
     const newMaxTotalDeposited = process.env.NEW_MAX_TOTAL_DEPOSITED_NATIVE;
     if (!newMaxTotalDeposited) {
         throw new Error('NEW_MAX_TOTAL_DEPOSITED_NATIVE environment variable is required');

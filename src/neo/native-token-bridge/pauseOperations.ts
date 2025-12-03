@@ -1,8 +1,7 @@
-import { NeoXBridge } from "@bane-labs/bridge-sdk-ts/dist/neo/contracts/neo-x-bridge.js";
-import { neonAdapter } from "@bane-labs/bridge-sdk-ts";
+import { NativeTokenBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
 import { createNativeTokenBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
-async function pauseOperations(neoXBridge: NeoXBridge) {
+async function pauseOperations(neoXBridge: NativeTokenBridge) {
     console.log("\n--- Testing NeoX Bridge Pause/Unpause Operations ---");
 
     const config = neoXBridge.getConfig();
@@ -63,7 +62,7 @@ async function pauseOperations(neoXBridge: NeoXBridge) {
     }
 }
 
-async function logPauseStates(neoXBridge: NeoXBridge) {
+async function logPauseStates(neoXBridge: NativeTokenBridge) {
     try {
         const bridgeIsPaused = await neoXBridge.isPaused();
         console.log(`  Bridge Paused: ${bridgeIsPaused}`);

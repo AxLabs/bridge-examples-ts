@@ -1,7 +1,7 @@
-import { NeoXBridge } from "@bane-labs/bridge-sdk-ts/dist/neo/contracts/neo-x-bridge.js";
 import { createNativeTokenBridgeFromEnvironment, ensureEnv } from "../utils";
+import { NativeTokenBridge } from "@bane-labs/bridge-sdk-ts";
 
-async function tokenBridgeOperations(neoXBridge: NeoXBridge) {
+async function tokenBridgeOperations(neoXBridge: NativeTokenBridge) {
     console.log("\n--- Testing NeoX Bridge Token Operations ---");
 
     const operation = process.env.TOKEN_OPERATION;
@@ -43,11 +43,11 @@ async function tokenBridgeOperations(neoXBridge: NeoXBridge) {
                 console.error(`Unknown operation: ${operation}`);
         }
     } catch (error) {
-        console.error(`Failed to execute ${operation}:`, error instanceof Error ? error.message : error);
+        console.error(`Failed to execute ${operation}:`, error);
     }
 }
 
-async function registerToken(neoXBridge: NeoXBridge) {
+async function registerToken(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     if (!token) {
         throw new Error('TOKEN_ADDRESS environment variable is required');
@@ -79,9 +79,9 @@ async function registerToken(neoXBridge: NeoXBridge) {
     console.log(`Token registered. Transaction: ${result.txHash}`);
 }
 
-async function depositToken(neoXBridge: NeoXBridge) {
+async function depositToken(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
-    const from = process.env.TOKEN_FROM_ADDRESS;
+    const from = neoXBridge.getConfig().account.scriptHash;
     const to = process.env.TOKEN_TO_ADDRESS;
     const amount = process.env.TOKEN_AMOUNT;
     const maxFee = process.env.TOKEN_MAX_FEE;
@@ -92,7 +92,7 @@ async function depositToken(neoXBridge: NeoXBridge) {
 
     const amountValue = parseInt(amount, 10);
     const maxFeeValue = parseInt(maxFee, 10);
-    const feeSponsor = process.env.TOKEN_FEE_SPONSOR || undefined;
+    const feeSponsor = from;
 
     console.log(`Depositing token: ${token}`);
     console.log(`From: ${from} to: ${to}`);
@@ -105,7 +105,7 @@ async function depositToken(neoXBridge: NeoXBridge) {
     console.log(`Token deposit completed. Transaction: ${result.txHash}`);
 }
 
-async function claimToken(neoXBridge: NeoXBridge) {
+async function claimToken(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const nonce = process.env.TOKEN_CLAIM_NONCE;
 
@@ -120,7 +120,7 @@ async function claimToken(neoXBridge: NeoXBridge) {
     console.log(`Token claim completed. Transaction: ${result.txHash}`);
 }
 
-async function pauseTokenBridge(neoXBridge: NeoXBridge) {
+async function pauseTokenBridge(neoXBridge: NativeTokenBridge) {
     const neoN3Token = process.env.TOKEN_ADDRESS;
     if (!neoN3Token) {
         throw new Error('TOKEN_ADDRESS environment variable is required');
@@ -131,7 +131,7 @@ async function pauseTokenBridge(neoXBridge: NeoXBridge) {
     console.log(`Token bridge paused. Transaction: ${result.txHash}`);
 }
 
-async function unpauseTokenBridge(neoXBridge: NeoXBridge) {
+async function unpauseTokenBridge(neoXBridge: NativeTokenBridge) {
     const neoN3Token = process.env.TOKEN_ADDRESS;
     if (!neoN3Token) {
         throw new Error('TOKEN_ADDRESS environment variable is required');
@@ -142,13 +142,16 @@ async function unpauseTokenBridge(neoXBridge: NeoXBridge) {
     console.log(`Token bridge unpaused. Transaction: ${result.txHash}`);
 }
 
-async function setTokenDepositFee(neoXBridge: NeoXBridge) {
+async function setTokenDepositFee(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newFee = process.env.NEW_TOKEN_DEPOSIT_FEE;
 
     if (!token || !newFee) {
         throw new Error('TOKEN_ADDRESS and NEW_TOKEN_DEPOSIT_FEE environment variables are required');
     }
+
+    const isToken = await neoXBridge.isRegisteredToken(token);
+    console.log(`Is token ${token} registered: ${isToken}`);
 
     const newFeeValue = parseInt(newFee, 10);
     const newDepositFees = new Map<string, number>();
@@ -160,7 +163,7 @@ async function setTokenDepositFee(neoXBridge: NeoXBridge) {
     console.log(`Token deposit fee updated. Transaction: ${result.txHash}`);
 }
 
-async function setMinTokenDeposit(neoXBridge: NeoXBridge) {
+async function setMinTokenDeposit(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newMinDeposit = process.env.NEW_MIN_TOKEN_DEPOSIT;
 
@@ -178,7 +181,7 @@ async function setMinTokenDeposit(neoXBridge: NeoXBridge) {
     console.log(`Minimum token deposit updated. Transaction: ${result.txHash}`);
 }
 
-async function setMaxTokenDeposit(neoXBridge: NeoXBridge) {
+async function setMaxTokenDeposit(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newMaxDeposit = process.env.NEW_MAX_TOKEN_DEPOSIT;
 
@@ -196,7 +199,7 @@ async function setMaxTokenDeposit(neoXBridge: NeoXBridge) {
     console.log(`Maximum token deposit updated. Transaction: ${result.txHash}`);
 }
 
-async function setMaxTokenWithdrawals(neoXBridge: NeoXBridge) {
+async function setMaxTokenWithdrawals(neoXBridge: NativeTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newMaxWithdrawals = process.env.NEW_MAX_TOKEN_WITHDRAWALS;
 
