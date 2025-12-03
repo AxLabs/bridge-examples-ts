@@ -45,6 +45,8 @@ export async function callReadOnlyMethods(executionManager: ExecutionManager) {
         const testArgs: any[] = [];
 
         try {
+            // log serialized call params
+            console.log(`Serializing call to ${testMethod} on target ${testTarget} with flags ${testCallFlags} and args ${JSON.stringify(testArgs)}`);
             const serializedCall = await executionManager.serializeCall(testTarget, testMethod, testCallFlags, testArgs);
             console.log(`Serialized Call (${testMethod}): ${serializedCall}`);
 
@@ -54,11 +56,11 @@ export async function callReadOnlyMethods(executionManager: ExecutionManager) {
             const isAllowedCall = await executionManager.isAllowedCall(serializedCall);
             console.log(`Is Allowed Call: ${isAllowedCall}`);
         } catch (error) {
-            console.log(`Serialization/validation error: ${error instanceof Error ? error.message : error}`);
+            console.log(`Serialization/validation error: ${error}`);
         }
 
     } catch (error) {
-        console.error('Failed to call read-only methods:', error instanceof Error ? error.message : error);
+        console.error('Failed to call read-only methods:', error);
     }
 }
 

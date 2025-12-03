@@ -10,7 +10,7 @@ async function serializeCallExamples(executionManager: ExecutionManager) {
     }
 
     const method = process.env.SERIALIZE_METHOD || 'isPaused';
-    const callFlags = process.env.SERIALIZE_CALL_FLAGS ? parseInt(process.env.SERIALIZE_CALL_FLAGS, 10) : 0;
+    const callFlags = 15;
 
     console.log(`Target: ${target}`);
     console.log(`Method: ${method}`);
@@ -36,6 +36,10 @@ async function serializeCallExamples(executionManager: ExecutionManager) {
 
         const methodWithParams = 'executeMessage';
         const testNonce = 1;
+        const nonceArgument = {
+            type: 'Integer',
+            value: testNonce.toString()
+        }
 
         console.log(`Method with params: ${methodWithParams}`);
         console.log(`Test nonce: ${testNonce}`);
@@ -44,7 +48,7 @@ async function serializeCallExamples(executionManager: ExecutionManager) {
             target,
             methodWithParams,
             callFlags,
-            [testNonce]
+            [nonceArgument]
         );
 
         console.log(`Serialized call with params: ${serializedCallWithParams}`);

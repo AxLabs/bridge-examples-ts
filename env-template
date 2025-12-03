@@ -3,7 +3,7 @@ NEO_NODE_URL=http://localhost:40332
 #Conrtract hashes
 MESSAGE_BRIDGE_CONTRACT_HASH=bd98300a1951d72533fa749010265f71c4cfff38
 BRIDGE_MANAGEMENT_CONTRACT_HASH=f0e6bccc463fa39fb21c4d0b69c2c279cd3d12d9
-EXECUTION_MANAGER_ADDRESS=a4cda6c7b19c7e06ad702f1bc7e20ecc21e0a050
+EXECUTION_MANAGER_CONTRACT_HASH=0xa4cda6c7b19c7e06ad702f1bc7e20ecc21e0a050
 NATIVE_TOKEN_BRIDGE_CONTRACT_HASH=0x356376dcd5580f49f8b4d1274745ac55ad858784
 
 # Validator public keys
@@ -30,7 +30,6 @@ MESSAGE_STORE_ONLY_DATA=Hello from Neon3!
 MESSAGE_NONCE=1 #also used for getter methods
 
 # Execution Manager Operations
-EXECUTABLE_CODE=0x41 # Executable code for message execution (default: 0x41)
 SERIALIZE_TARGET=... # Target contract hash for serialization (defaults to MESSAGE_BRIDGE_CONTRACT_HASH)
 SERIALIZE_METHOD=isPaused # Method name for serialization (default: isPaused)
 SERIALIZE_CALL_FLAGS=0 # Call flags for serialization (default: 0)
