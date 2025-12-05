@@ -1,13 +1,13 @@
-# TypeScript Examples for MessageBridge
+# TypeScript Examples for Bridge Contracts
 
-This directory contains TypeScript scripts demonstrating how to interact with the MessageBridge contract on Neo using the `bridge-sdk-ts` library.
+This directory contains TypeScript scripts demonstrating how to interact with various bridge contracts on Neo using the `bridge-sdk-ts` library.
 
 ## Prerequisites
 - Node.js v18 or newer
 - npm
 - Access to a running Neo node (local or remote)
 - A valid Neo wallet file (JSON format)
-- Contract hash for the deployed MessageBridge contract
+- Contract hashes for the deployed bridge contracts
 
 ## Setup
 1. Install dependencies:
@@ -19,49 +19,30 @@ This directory contains TypeScript scripts demonstrating how to interact with th
    cp env-template .env
    ```
    Edit `.env` and set values for:
-   - `MESSAGE_BRIDGE_CONTRACT_HASH` (contract hash)
+   - Contract hashes for deployed bridge contracts (e.g., `MESSAGE_BRIDGE_CONTRACT_HASH`, `NATIVE_BRIDGE_CONTRACT_HASH`, etc.)
    - `NEO_NODE_URL` (RPC URL)
    - `WALLET_PATH` (path to your Neo wallet JSON)
    - `WALLET_PASSWORD` (if your wallet is encrypted)
    - Other variables as needed for specific scripts
 
 ## Usage
-Scripts can be run using npm scripts or directly with `tsx`:
-
-- **Serialize contract call:**
-  ```sh
-  npm run example:serialize
-  # or
-  tsx serializeCall.ts
-  ```
-- **Wallet operations:**
-  ```sh
-  npm run example:wallet
-  ```
-- **Send messages:**
-  ```sh
-  npm run example:send
-  ```
-- **Execute message:**
-  ```sh
-  npm run example:execute
-  ```
-- **Read-only contract methods:**
-  ```sh
-  npm run example:readonly
-  ```
-- **Pause/unpause operations:**
-  ```sh
-  npm run example:pause
-  ```
+Scripts are organized by bridge component. See the subdirectories below for specific usage instructions and npm scripts.
 
 ## Environment Variables
 See `env-template` for all required and optional variables. Key variables include:
-- `MESSAGE_BRIDGE_CONTRACT_HASH`
 - `NEO_NODE_URL`
 - `WALLET_PATH`
 - `WALLET_PASSWORD`
-- `MESSAGE_NONCE`, `MESSAGE_EXECUTABLE_DATA`, etc. (for specific operations)
+- Contract-specific hashes (e.g., `MESSAGE_BRIDGE_CONTRACT_HASH`, `NATIVE_BRIDGE_CONTRACT_HASH`)
+- Operation-specific variables (see subdirectory READMEs for details)
+
+## Bridge Components
+- **Native Bridge**: Handles native token (GAS/NEO) bridging. See [src/neo/native-bridge/README.md](src/neo/native-bridge/README.md)
+- **Token Bridge**: Handles NEP-17 token bridging. See [src/neo/token-bridge/README.md](src/neo/token-bridge/README.md)
+- **Message Bridge**: Handles cross-chain message bridging. See [src/neo/message-bridge/README.md](src/neo/message-bridge/README.md)
+- **Management**: Handles ownership, relayer, governor, security guard, and validator management. See [src/neo/management/README.md](src/neo/management/README.md)
+- **Execution Manager**: Handles message execution and bridge management. See [src/neo/execution-manager/README.md](src/neo/execution-manager/README.md)
+- **Wallet Operations**: Examples for wallet interactions. See [src/neo/wallet/walletOperations.ts](src/neo/wallet/walletOperations.ts)
 
 ## Notes
 - Ensure your `.env` file does **not** use quotes or semicolons around values.
@@ -69,4 +50,3 @@ See `env-template` for all required and optional variables. Key variables includ
 - Scripts are modular; you can add or modify npm scripts in `package.json` as needed.
 
 For more details, see the comments in each script file.
-

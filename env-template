@@ -36,6 +36,7 @@ SERIALIZE_CALL_FLAGS=0 # Call flags for serialization (default: 0)
 
 # Native Token Bridge Operations
 # NATIVE_OPERATION=set-native-bridge|deposit-native|claim-native|pause-native|unpause-native|set-native-fee|set-native-min|set-native-max|set-native-total
+NATIVE_CLAIM_NONCE=... # Nonce for native claim
 NATIVE_TOKEN_ADDRESS=... # Token address for native bridge
 NATIVE_DECIMALS_LINKED_CHAIN=18 # Decimals on linked chain (default: 18)
 NATIVE_DEPOSIT_FEE=0 # Deposit fee (default: 0)

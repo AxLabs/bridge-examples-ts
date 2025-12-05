@@ -6,7 +6,8 @@ import {
     GenericError,
     BridgeManagement,
     MessageBridge,
-    NativeTokenBridge,
+    NativeBridge,
+    TokenBridge,
     ExecutionManager
 } from "@bane-labs/bridge-sdk-ts";
 import dotenv from "dotenv";
@@ -38,15 +39,32 @@ export async function createExecutionManagerFromEnvironment(): Promise<Execution
     return new ExecutionManager(config);
 }
 
-export async function createNativeTokenBridgeFromEnvironment(): Promise<NativeTokenBridge> {
-    const contractHash = process.env.NATIVE_TOKEN_BRIDGE_CONTRACT_HASH;
+export async function createNativeBridgeFromEnvironment(): Promise<NativeBridge> {
+    const contractHash = process.env.NATIVE_BRIDGE_CONTRACT_HASH;
     if (!contractHash) {
-        throw new GenericError('NATIVE_TOKEN_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+        throw new GenericError('NATIVE_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
     }
 
     const config = await createContractWrapperConfigFromEnv(contractHash);
 
-    return new NativeTokenBridge(config);
+    return new NativeBridge(config);
+}
+
+export async function createTokenBridgeFromEnvironment(): Promise<TokenBridge> {
+    const contractHash = process.env.TOKEN_BRIDGE_CONTRACT_HASH;
+    if (!contractHash) {
+        throw new GenericError('TOKEN_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+    }
+
+    const config = await createContractWrapperConfigFromEnv(contractHash);
+
+    return new TokenBridge(config);
+}
+
+// Legacy function for backward compatibility
+export async function createNativeTokenBridgeFromEnvironment(): Promise<NativeBridge> {
+    console.warn('createNativeTokenBridgeFromEnvironment is deprecated. Use createNativeBridgeFromEnvironment instead.');
+    return createNativeBridgeFromEnvironment();
 }
 
 export async function createManagementFromEnvironment(): Promise<BridgeManagement> {
