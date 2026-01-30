@@ -70,7 +70,7 @@ async function main() {
     const { createNativeBridgeFromEnvironment } = await import("../utils");
 
     try {
-        const nativeBridge = createNativeBridgeFromEnvironment();
+        const nativeBridge = await createNativeBridgeFromEnvironment();
         await callReadOnlyMethods(nativeBridge);
     } catch (error) {
         console.error("Failed to test EVM Native Bridge read-only methods:", error);

@@ -28,7 +28,8 @@ This directory contains examples for interacting with the EVM Token Bridge contr
 
 - `EVM_TOKEN_BRIDGE_CONTRACT_ADDRESS` - Contract address of the EVM Token Bridge
 - `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
-- `EVM_PRIVATE_KEY` - Private key for the wallet (required for write operations)
+- `EVM_WALLET_PATH` - Path to the EVM wallet file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Optional Environment Variables for Testing
 - `TOKEN_ADDRESS` - Specific EVM token address to query detailed information for

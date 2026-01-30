@@ -25,7 +25,8 @@ This directory contains examples for interacting with the EVM Bridge Management 
 
 - `EVM_BRIDGE_MANAGEMENT_CONTRACT_ADDRESS` - Contract address of the EVM Bridge Management
 - `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
-- `EVM_PRIVATE_KEY` - Private key for the wallet (required for write operations)
+- `EVM_WALLET_PATH` - Path to the EVM wallet file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 - For `ownerRelayerGovernor.ts`: `MANAGEMENT_ACTION` (set-owner, set-relayer, set-governor, set-security-guard), corresponding `NEW_OWNER`, `NEW_RELAYER`, `NEW_GOVERNOR`, `NEW_SECURITY_GUARD`

@@ -3,7 +3,7 @@ import { createBridgeManagementFromEnvironment, ensureEnv } from "../utils";
 async function main() {
     const action = process.env.VALIDATOR_ACTION;
 
-    const bridgeManagement = createBridgeManagementFromEnvironment();
+    const bridgeManagement = await createBridgeManagementFromEnvironment();
 
     switch (action) {
         case 'add': {

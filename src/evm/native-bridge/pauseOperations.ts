@@ -3,7 +3,7 @@ import { createNativeBridgeFromEnvironment, ensureEnv } from "../utils";
 async function performPauseOperations() {
     console.log("\n--- Testing EVM Native Bridge Pause/Unpause Operations ---");
 
-    const nativeBridge = createNativeBridgeFromEnvironment();
+    const nativeBridge = await createNativeBridgeFromEnvironment();
 
     try {
         console.log("\n1. Initial State Check:");

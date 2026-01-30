@@ -13,8 +13,8 @@ This directory contains examples for interacting with Neo wallets, including loa
 
 ## Required Environment Variables
 
-- `WALLET_PATH` - Path to the Neo wallet file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to the Neo wallet file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 - `NEO_NODE_URL` - RPC URL of the Neo node
 
 ## Features

@@ -125,12 +125,12 @@ async function checkAccountBalances(accountAddress: string, rpcUrl: string, acco
 export type { NeoAssetBalance, NeoBalanceResponse, BalanceCache, AccountInfo };
 
 export async function testWalletOperations(): Promise<void> {
-    const walletPath = process.env.WALLET_PATH;
-    const walletPassword = process.env.WALLET_PASSWORD;
+    const walletPath = process.env.NEO_WALLET_PATH;
+    const walletPassword = process.env.NEO_WALLET_PASSWORD;
     const rpcUrl = process.env.NEO_NODE_URL;
 
     if (!walletPath) {
-        console.error('ERROR: No WALLET_PATH environment variable set. Please set it to load a wallet.');
+        console.error('ERROR: No NEO_WALLET_PATH environment variable set. Please set it to load a wallet.');
         return;
     }
     if (!rpcUrl) {

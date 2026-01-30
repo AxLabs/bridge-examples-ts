@@ -27,7 +27,8 @@ Create a `.env` file in the project root with the following variables:
 ```env
 # EVM Network Configuration
 EVM_RPC_URL=http://localhost:8545
-EVM_PRIVATE_KEY=0x...
+EVM_WALLET_PATH=../neox-funding/neox-wallets/personal.json
+EVM_WALLET_PASSWORD=
 
 # Contract Addresses
 EVM_MESSAGE_BRIDGE_CONTRACT_ADDRESS=0x...
@@ -71,7 +72,7 @@ See individual README files in each subdirectory for more specific examples and 
 Read-only operations only require `EVM_RPC_URL` and contract addresses. They use the `read` property of contract instances.
 
 ### Write Operations
-Write operations require `EVM_PRIVATE_KEY` in addition to read requirements. They use the `write` property and return transaction hashes.
+Write operations require `EVM_WALLET_PATH` and `EVM_WALLET_PASSWORD` in addition to read requirements. They use the `write` property and return transaction hashes.
 
 ## Error Handling
 

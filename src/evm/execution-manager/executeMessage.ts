@@ -25,10 +25,10 @@ async function main() {
     ensureEnv();
 
     try {
-        const executionManager = createExecutionManagerFromEnvironment();
+        const executionManager = await createExecutionManagerFromEnvironment();
 
-        if (!process.env.EVM_PRIVATE_KEY) {
-            throw new Error('Wallet client is required for write operations. Please set EVM_PRIVATE_KEY environment variable.');
+        if (!process.env.EVM_WALLET_PATH) {
+            throw new Error('Wallet client is required for write operations. Please set EVM_WALLET_PATH environment variable.');
         }
 
         const nonceStr = requireEnvVar('MESSAGE_NONCE');

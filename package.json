@@ -99,6 +99,7 @@
   "dependencies": {
     "@bane-labs/bridge-sdk-ts": "file:../../../bridge-sdk-ts/bane-labs-bridge-sdk-ts-1.0.0-beta.7.tgz",
     "dotenv": "^17.2.3",
+    "ethers": "^6.16.0",
     "viem": "^2.21.53"
   },
   "devDependencies": {

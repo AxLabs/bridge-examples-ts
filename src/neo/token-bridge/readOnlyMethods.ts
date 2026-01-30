@@ -6,8 +6,8 @@
  * Required environment variables:
  * - TOKEN_BRIDGE_CONTRACT_HASH: The contract hash of the Token Bridge
  * - NEO_NODE_URL: The RPC URL of the Neo node
- * - WALLET_PATH: Path to the wallet file
- * - WALLET_PASSWORD: Password for the wallet (if encrypted)
+ * - NEO_WALLET_PATH: Path to the wallet file
+ * - NEO_WALLET_PASSWORD: Password for the wallet (if encrypted)
  *
  * Usage:
  *   npm run tb:readonly

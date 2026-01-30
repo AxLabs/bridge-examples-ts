@@ -17,7 +17,8 @@ This directory contains examples for interacting with the EVM ExecutionManager c
 
 - `EVM_EXECUTION_MANAGER_CONTRACT_ADDRESS` - Contract address of the EVM ExecutionManager
 - `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
-- `EVM_PRIVATE_KEY` - Private key for the wallet (required for write operations)
+- `EVM_WALLET_PATH` - Path to the EVM wallet file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 - For `executeMessage.ts`: 

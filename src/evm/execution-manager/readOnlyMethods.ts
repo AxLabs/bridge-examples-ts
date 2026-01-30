@@ -30,7 +30,7 @@ async function main() {
     const { createExecutionManagerFromEnvironment } = await import("../utils");
 
     try {
-        const executionManager = createExecutionManagerFromEnvironment();
+        const executionManager = await createExecutionManagerFromEnvironment();
         await callReadOnlyMethods(executionManager);
     } catch (error) {
         console.error("Failed to test EVM Execution Manager read-only methods:", error);

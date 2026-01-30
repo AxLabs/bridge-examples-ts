@@ -8,7 +8,7 @@ async function nativeBridgeOperations() {
         return;
     }
 
-    const nativeBridge = createNativeBridgeFromEnvironment();
+    const nativeBridge = await createNativeBridgeFromEnvironment();
 
     try {
         switch (operation) {
