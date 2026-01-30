@@ -14,17 +14,16 @@ This directory contains examples for interacting with the Message Bridge contrac
 ## Available Scripts
 
 ### Message Bridge Operations
-- `npm run amb:execute` - Execute a message using MESSAGE_NONCE
-- `npm run amb:readonly` - Read all message bridge state information
-- `npm run amb:pause` - Test all pause/unpause operations
-- `npm run amb:send` - Send messages based on MESSAGE_BRIDGE_OPERATION
-- `npm run amb:serialize` - Test serialization and validation methods
-- `npm run amb:set-execution-manager` - Set execution manager address
+- `npm run neo:amb:execute` - Execute a message using MESSAGE_NONCE
+- `npm run neo:amb:readonly` - Read all message bridge state information
+- `npm run neo:amb:pause` - Test all pause/unpause operations
+- `npm run neo:amb:serialize` - Test serialization and validation methods
+- `npm run neo:amb:set-executor` - Set execution manager address
 
 ### Specific Message Operations
-- `npm run amb:send-executable` - Send an executable message
-- `npm run amb:send-result` - Send a result message
-- `npm run amb:send-store-only` - Send a store-only message
+- `npm run neo:amb:send-executable` - Send an executable message
+- `npm run neo:amb:send-result` - Send a result message
+- `npm run neo:amb:send-store-only` - Send a store-only message
 
 ## Required Environment Variables
 

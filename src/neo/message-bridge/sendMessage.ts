@@ -1,9 +1,9 @@
 import {
     NeoGenericError,
     NeoMessageBridge,
-    type SendExecutableMessageParams,
-    type SendResultMessageParams,
-    type SendStoreOnlyMessageParams
+    type NeoSendExecutableMessageParams,
+    type NeoSendResultMessageParams,
+    type NeoSendStoreOnlyMessageParams
 } from "@bane-labs/bridge-sdk-ts";
 import { createMessageBridgeFromEnvironment, ensureEnv } from "../utils";
 
@@ -17,7 +17,7 @@ async function sendExecutableMessage(messageBridge: NeoMessageBridge) {
 
     const sendingFee = await messageBridge.sendingFee();
 
-    const params: SendExecutableMessageParams = {
+    const params: NeoSendExecutableMessageParams = {
         messageData,
         storeResult,
         maxFee: sendingFee
@@ -35,7 +35,7 @@ async function sendResultMessage(messageBridge: NeoMessageBridge) {
 
     const sendingFee = await messageBridge.sendingFee();
 
-    const params: SendResultMessageParams = {
+    const params: NeoSendResultMessageParams = {
         nonce: parseInt(nonce, 10),
         maxFee: sendingFee
     };
@@ -52,7 +52,7 @@ async function sendStoreOnlyMessage(messageBridge: NeoMessageBridge) {
 
     const sendingFee = await messageBridge.sendingFee();
 
-    const params: SendStoreOnlyMessageParams = {
+    const params: NeoSendStoreOnlyMessageParams = {
         messageData,
         maxFee: sendingFee
     };

@@ -10,19 +10,19 @@ This directory contains examples for interacting with the Token Bridge contract,
 ## Available Scripts
 
 ### Token Bridge Operations
-- `npm run tb:operations` - Interactive operations based on TOKEN_OPERATION env var
-- `npm run tb:readonly` - Read all token bridge state information
+- `npm run neo:tb:operations` - Interactive operations based on TOKEN_OPERATION env var
+- `npm run neo:tb:readonly` - Read all token bridge state information
 
 ### Specific Token Operations
-- `npm run tb:register` - Register a new token
-- `npm run tb:deposit` - Deposit tokens
-- `npm run tb:claim` - Claim tokens
-- `npm run tb:pause` - Pause token bridge for a specific token
-- `npm run tb:unpause` - Unpause token bridge for a specific token
-- `npm run tb:set-fee` - Set token deposit fee
-- `npm run tb:set-min` - Set minimum token deposit amount
-- `npm run tb:set-max` - Set maximum token deposit amount
-- `npm run tb:set-withdrawals` - Set maximum token withdrawals
+- `npm run neo:tb:register` - Register a new token
+- `npm run neo:tb:deposit` - Deposit tokens
+- `npm run neo:tb:claim` - Claim tokens
+- `npm run neo:tb:pause` - Pause token bridge for a specific token
+- `npm run neo:tb:unpause` - Unpause token bridge for a specific token
+- `npm run neo:tb:set-fee` - Set token deposit fee
+- `npm run neo:tb:set-min` - Set minimum token deposit amount
+- `npm run neo:tb:set-max` - Set maximum token deposit amount
+- `npm run neo:tb:set-withdrawals` - Set maximum token withdrawals
 
 ## Required Environment Variables
 

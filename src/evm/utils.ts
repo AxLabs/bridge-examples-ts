@@ -4,7 +4,8 @@ import {
     EvmExecutionManager,
     EvmNativeBridge,
     EvmTokenBridge,
-    EvmBridgeManagement, EvmMessageBridgeBuilder, EvmNativeBridgeBuilder, EvmTokenBridgeBuilder
+    EvmBridgeManagement, EvmMessageBridgeFactory, EvmNativeBridgeFactory, EvmTokenBridgeFactory,
+    EvmExecutionManagerFactory, EvmBridgeManagementFactory
 } from "@bane-labs/bridge-sdk-ts";
 import { createPublicClient, createWalletClient, http, type Address } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
@@ -48,7 +49,7 @@ export function createMessageBridgeFromEnvironment(): EvmMessageBridge {
     }
 
     const config = createEvmContractWrapperConfig(contractAddress as Address);
-    return EvmMessageBridgeBuilder.create(config);
+    return EvmMessageBridgeFactory.create(config);
 }
 
 export function createExecutionManagerFromEnvironment(): EvmExecutionManager {
@@ -58,7 +59,7 @@ export function createExecutionManagerFromEnvironment(): EvmExecutionManager {
     }
 
     const config = createEvmContractWrapperConfig(contractAddress as Address);
-    return new EvmExecutionManager(config);
+    return EvmExecutionManagerFactory.create(config);
 }
 
 export function createNativeBridgeFromEnvironment(): EvmNativeBridge {
@@ -68,7 +69,7 @@ export function createNativeBridgeFromEnvironment(): EvmNativeBridge {
     }
 
     const config = createEvmContractWrapperConfig(contractAddress as Address);
-    return EvmNativeBridgeBuilder.create(config);
+    return EvmNativeBridgeFactory.create(config);
 }
 
 export function createTokenBridgeFromEnvironment(): EvmTokenBridge {
@@ -78,7 +79,7 @@ export function createTokenBridgeFromEnvironment(): EvmTokenBridge {
     }
 
     const config = createEvmContractWrapperConfig(contractAddress as Address);
-    return EvmTokenBridgeBuilder.create(config);
+    return EvmTokenBridgeFactory.create(config);
 }
 
 export function createBridgeManagementFromEnvironment(): EvmBridgeManagement {
@@ -88,7 +89,7 @@ export function createBridgeManagementFromEnvironment(): EvmBridgeManagement {
     }
 
     const config = createEvmContractWrapperConfig(contractAddress as Address);
-    return new EvmBridgeManagement(config);
+    return EvmBridgeManagementFactory.create(config);
 }
 
 export function requireEnvVar(name: string): string {

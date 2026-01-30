@@ -9,7 +9,7 @@ This directory contains examples for interacting with Neo wallets, including loa
 ## Available Scripts
 
 ### Wallet Operations
-- `npm run wallet` - Run wallet operations (load, decrypt, display balances, etc.)
+- `npm run neo:wallet` - Run wallet operations (load, decrypt, display balances, etc.)
 
 ## Required Environment Variables
 

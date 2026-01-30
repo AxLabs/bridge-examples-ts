@@ -4,12 +4,25 @@ This directory contains examples for interacting with the EVM Token Bridge contr
 
 ## Files
 
+- `tokenBridgeOperations.ts` - Token bridge management operations (register, deposit, claim, pause/unpause, fee management)
 - `readOnlyMethods.ts` - Read-only method calls to query token bridge state and configuration
 
 ## Available Scripts
 
 ### Token Bridge Operations
+- `npm run evm:tb:operations` - Interactive operations based on TOKEN_OPERATION env var
 - `npm run evm:tb:readonly` - Read all token bridge state information
+
+### Specific Token Operations
+- `npm run evm:tb:register` - Register a new token
+- `npm run evm:tb:deposit` - Deposit tokens
+- `npm run evm:tb:claim` - Claim tokens
+- `npm run evm:tb:pause` - Pause token bridge for a specific token
+- `npm run evm:tb:unpause` - Unpause token bridge for a specific token
+- `npm run evm:tb:set-fee` - Set token deposit fee
+- `npm run evm:tb:set-min` - Set minimum token deposit amount
+- `npm run evm:tb:set-max` - Set maximum token deposit amount
+- `npm run evm:tb:set-withdrawals` - Set maximum token withdrawals
 
 ## Required Environment Variables
 

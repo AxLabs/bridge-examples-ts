@@ -11,20 +11,20 @@ This directory contains examples for interacting with the Native Bridge contract
 ## Available Scripts
 
 ### Native Bridge Operations
-- `npm run nb:operations` - Interactive operations based on NATIVE_OPERATION env var
-- `npm run nb:readonly` - Display comprehensive bridge state, configuration, and NEP-17 token balances
-- `npm run nb:pause` - Test pause/unpause operations
+- `npm run neo:nb:operations` - Interactive operations based on NATIVE_OPERATION env var
+- `npm run neo:nb:readonly` - Display comprehensive bridge state, configuration, and NEP-17 token balances
+- `npm run neo:nb:pause` - Test pause/unpause operations
 
 ### Specific Native Operations
-- `npm run nb:set` - Set native bridge configuration
-- `npm run nb:deposit` - Deposit native tokens
-- `npm run nb:claim` - Claim native tokens
-- `npm run nb:pause-bridge` - Pause the native bridge
-- `npm run nb:unpause-bridge` - Unpause the native bridge
-- `npm run nb:set-fee` - Set native deposit fee
-- `npm run nb:set-min` - Set minimum native deposit amount
-- `npm run nb:set-max` - Set maximum native deposit amount
-- `npm run nb:set-total` - Set maximum total deposited native amount
+- `npm run neo:nb:set` - Set native bridge configuration
+- `npm run neo:nb:deposit` - Deposit native tokens
+- `npm run neo:nb:claim` - Claim native tokens
+- `npm run neo:nb:pause-bridge` - Pause the native bridge
+- `npm run neo:nb:unpause-bridge` - Unpause the native bridge
+- `npm run neo:nb:set-fee` - Set native deposit fee
+- `npm run neo:nb:set-min` - Set minimum native deposit amount
+- `npm run neo:nb:set-max` - Set maximum native deposit amount
+- `npm run neo:nb:set-total` - Set maximum total deposited native amount
 
 ## Required Environment Variables
 

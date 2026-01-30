@@ -4,12 +4,27 @@ This directory contains examples for interacting with the EVM Native Bridge cont
 
 ## Files
 
-- `readOnlyMethods.ts` - Read-only method calls to query native bridge state and configuration
+- `nativeBridgeOperations.ts` - Native bridge management operations (set, deposit, claim, pause/unpause, fee management)
+- `pauseOperations.ts` - Bridge and deposits pause/unpause operations testing
+- `readOnlyMethods.ts` - Comprehensive read-only queries for bridge state, configuration, and NEP-17 token balances
 
 ## Available Scripts
 
 ### Native Bridge Operations
-- `npm run evm:nb:readonly` - Read all native bridge state information
+- `npm run evm:nb:operations` - Interactive operations based on NATIVE_OPERATION env var
+- `npm run evm:nb:readonly` - Display comprehensive bridge state, configuration, and NEP-17 token balances
+- `npm run evm:nb:pause` - Test pause/unpause operations
+
+### Specific Native Operations
+- `npm run evm:nb:set` - Set native bridge configuration
+- `npm run evm:nb:deposit` - Deposit native tokens
+- `npm run evm:nb:claim` - Claim native tokens
+- `npm run evm:nb:pause-bridge` - Pause the native bridge
+- `npm run evm:nb:unpause-bridge` - Unpause the native bridge
+- `npm run evm:nb:set-fee` - Set native deposit fee
+- `npm run evm:nb:set-min` - Set minimum native deposit amount
+- `npm run evm:nb:set-max` - Set maximum native deposit amount
+- `npm run evm:nb:set-total` - Set maximum total deposited native amount
 
 ## Required Environment Variables
 
