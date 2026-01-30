@@ -1,14 +1,14 @@
 import {
     type Account,
-    type ContractWrapperConfig,
+    type NeoContractWrapperConfig,
     createAccountFromWalletFile,
     createDecryptedAccountFromWalletFile,
-    GenericError,
-    BridgeManagement,
-    MessageBridge,
-    NativeBridge,
-    TokenBridge,
-    ExecutionManager
+    NeoGenericError,
+    NeoBridgeManagement,
+    NeoMessageBridge,
+    NeoNativeBridge,
+    NeoTokenBridge,
+    NeoExecutionManager
 } from "@bane-labs/bridge-sdk-ts";
 import dotenv from "dotenv";
 
@@ -17,78 +17,78 @@ export function ensureEnv() {
     dotenv.config();
 }
 
-export async function createMessageBridgeFromEnvironment(): Promise<MessageBridge> {
+export async function createMessageBridgeFromEnvironment(): Promise<NeoMessageBridge> {
     const contractHash = process.env.MESSAGE_BRIDGE_CONTRACT_HASH;
     if (!contractHash) {
-        throw new GenericError('MESSAGE_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+        throw new NeoGenericError('MESSAGE_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
     }
 
     const config = await createContractWrapperConfigFromEnv(contractHash);
 
-    return new MessageBridge(config);
+    return new NeoMessageBridge(config);
 }
 
-export async function createExecutionManagerFromEnvironment(): Promise<ExecutionManager> {
+export async function createExecutionManagerFromEnvironment(): Promise<NeoExecutionManager> {
     const contractHash = process.env.EXECUTION_MANAGER_CONTRACT_HASH;
     if (!contractHash) {
-        throw new GenericError('EXECUTION_MANAGER_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+        throw new NeoGenericError('EXECUTION_MANAGER_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
     }
 
     const config = await createContractWrapperConfigFromEnv(contractHash);
 
-    return new ExecutionManager(config);
+    return new NeoExecutionManager(config);
 }
 
-export async function createNativeBridgeFromEnvironment(): Promise<NativeBridge> {
+export async function createNativeBridgeFromEnvironment(): Promise<NeoNativeBridge> {
     const contractHash = process.env.NATIVE_BRIDGE_CONTRACT_HASH;
     if (!contractHash) {
-        throw new GenericError('NATIVE_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+        throw new NeoGenericError('NATIVE_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
     }
 
     const config = await createContractWrapperConfigFromEnv(contractHash);
 
-    return new NativeBridge(config);
+    return new NeoNativeBridge(config);
 }
 
-export async function createTokenBridgeFromEnvironment(): Promise<TokenBridge> {
+export async function createTokenBridgeFromEnvironment(): Promise<NeoTokenBridge> {
     const contractHash = process.env.TOKEN_BRIDGE_CONTRACT_HASH;
     if (!contractHash) {
-        throw new GenericError('TOKEN_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+        throw new NeoGenericError('TOKEN_BRIDGE_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
     }
 
     const config = await createContractWrapperConfigFromEnv(contractHash);
 
-    return new TokenBridge(config);
+    return new NeoTokenBridge(config);
 }
 
 // Legacy function for backward compatibility
-export async function createNativeTokenBridgeFromEnvironment(): Promise<NativeBridge> {
+export async function createNativeTokenBridgeFromEnvironment(): Promise<NeoNativeBridge> {
     console.warn('createNativeTokenBridgeFromEnvironment is deprecated. Use createNativeBridgeFromEnvironment instead.');
     return createNativeBridgeFromEnvironment();
 }
 
-export async function createManagementFromEnvironment(): Promise<BridgeManagement> {
+export async function createManagementFromEnvironment(): Promise<NeoBridgeManagement> {
     const contractHash = process.env.BRIDGE_MANAGEMENT_CONTRACT_HASH;
     const rpcUrl = process.env.NEO_NODE_URL;
     const walletPath = process.env.WALLET_PATH;
     const walletPassword = process.env.WALLET_PASSWORD || '';
 
     if (!contractHash) {
-        throw new GenericError('BRIDGE_MANAGEMENT_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
+        throw new NeoGenericError('BRIDGE_MANAGEMENT_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
     }
     if (!rpcUrl) {
-        throw new GenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
+        throw new NeoGenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
     }
     if (!walletPath) {
-        throw new GenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
+        throw new NeoGenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
     }
 
     const account = await createDecryptedAccountFromWalletFile(walletPath, walletPassword);
     if (!account) {
-        throw new GenericError('Failed to load account from wallet file.', 'ACCOUNT_LOAD_FAILED');
+        throw new NeoGenericError('Failed to load account from wallet file.', 'ACCOUNT_LOAD_FAILED');
     }
     const config = {contractHash, rpcUrl, account};
-    return new BridgeManagement(config);
+    return new NeoBridgeManagement(config);
 }
 
 export function waitForStateUpdate(waitMs: number = 1000): Promise<void> {
@@ -99,7 +99,7 @@ export function waitForStateUpdate(waitMs: number = 1000): Promise<void> {
 async function createContractWrapperConfigFromEnv(contractHash: string) {
     const walletPath = process.env.WALLET_PATH;
     if (!walletPath) {
-        throw new GenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
+        throw new NeoGenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
     }
 
     const walletPassword = process.env.WALLET_PASSWORD || '';
@@ -112,7 +112,7 @@ async function createContractWrapperConfigFromEnv(contractHash: string) {
         account = createAccountFromWalletFile(walletPath);
 
         if (account && (account.tryGet("encrypted") || account.tryGet("WIF"))) {
-            throw new GenericError(
+            throw new NeoGenericError(
                 'Wallet contains encrypted private key but no WALLET_PASSWORD environment variable provided. Please set WALLET_PASSWORD to decrypt the wallet.',
                 'ENCRYPTED_WALLET_NO_PASSWORD'
             );
@@ -120,14 +120,14 @@ async function createContractWrapperConfigFromEnv(contractHash: string) {
     }
 
     if (!account) {
-        throw new GenericError('Failed to load account from wallet file', 'ACCOUNT_LOAD_FAILED');
+        throw new NeoGenericError('Failed to load account from wallet file', 'ACCOUNT_LOAD_FAILED');
     }
 
     if (!rpcUrl) {
-        throw new GenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
+        throw new NeoGenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
     }
 
-    const config: ContractWrapperConfig = {
+    const config: NeoContractWrapperConfig = {
         contractHash,
         rpcUrl,
         account

@@ -1,7 +1,6 @@
-import { MessageBridge } from "@bane-labs/bridge-sdk-ts";
+import { NeoMessageBridge } from "@bane-labs/bridge-sdk-ts";
 import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
-
-async function executeMessage(messageBridge: MessageBridge) {
+async function executeMessage(messageBridge: NeoMessageBridge) {
     const nonce = process.env.MESSAGE_NONCE;
     if (!nonce) {
         throw new Error('MESSAGE_NONCE environment variable is required for executing messages');

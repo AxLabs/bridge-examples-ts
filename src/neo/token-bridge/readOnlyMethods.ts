@@ -13,9 +13,9 @@
  *   npm run tb:readonly
  */
 import { createTokenBridgeFromEnvironment, ensureEnv } from "../utils";
-import { TokenBridge } from "@bane-labs/bridge-sdk-ts";
+import { NeoTokenBridge } from "@bane-labs/bridge-sdk-ts";
 
-export async function callReadOnlyMethods(tokenBridge: TokenBridge) {
+export async function callReadOnlyMethods(tokenBridge: NeoTokenBridge) {
     console.log("\n--- Testing Token Bridge Read-Only Methods ---");
 
     try {

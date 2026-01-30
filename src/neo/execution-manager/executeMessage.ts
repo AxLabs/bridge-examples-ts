@@ -1,7 +1,7 @@
-import { ExecutionManager } from "@bane-labs/bridge-sdk-ts";
+import { NeoExecutionManager } from "@bane-labs/bridge-sdk-ts";
 import { createExecutionManagerFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
-async function executeMessage(executionManager: ExecutionManager) {
+async function executeMessage(executionManager: NeoExecutionManager) {
     const nonce = process.env.MESSAGE_NONCE;
     if (!nonce) {
         throw new Error('MESSAGE_NONCE environment variable is required for executing messages');

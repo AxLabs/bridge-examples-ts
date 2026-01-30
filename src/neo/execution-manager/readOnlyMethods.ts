@@ -16,10 +16,10 @@
  *   npm run em:readonly
  */
 
-import { ExecutionManager } from "@bane-labs/bridge-sdk-ts";
+import { NeoExecutionManager } from "@bane-labs/bridge-sdk-ts";
 import { createExecutionManagerFromEnvironment, ensureEnv } from "../utils";
 
-export async function callReadOnlyMethods(executionManager: ExecutionManager) {
+export async function callReadOnlyMethods(executionManager: NeoExecutionManager) {
     console.log("\n--- Testing ExecutionManager Read-Only Methods ---");
 
     try {
