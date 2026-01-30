@@ -11,26 +11,24 @@ This directory contains examples for interacting with the Management contract, w
 ## Available Scripts
 
 ### Management Operations
-- `npm run mg:owner` - Set owner/relayer/governor/security guard based on MANAGEMENT_ACTION
-- `npm run mg:readonly` - Read all management state information
-- `npm run mg:validator` - Manage validators based on VALIDATOR_ACTION
+- `npm run neo:mgmt:readonly` - Read all management state information
+- `npm run neo:mgmt:validator-add` - Add a validator
+- `npm run neo:mgmt:validator-remove` - Remove a validator
+- `npm run neo:mgmt:validator-replace` - Replace a validator
+- `npm run neo:mgmt:validator-threshold` - Set validator threshold
 
 ### Specific Management Operations
-- `npm run mg:set-owner` - Set new owner
-- `npm run mg:set-relayer` - Set new relayer
-- `npm run mg:set-governor` - Set new governor
-- `npm run mg:set-security-guard` - Set new security guard
-- `npm run mg:add-validator` - Add a validator
-- `npm run mg:remove-validator` - Remove a validator
-- `npm run mg:replace-validator` - Replace a validator
-- `npm run mg:set-threshold` - Set validator threshold
+- `npm run neo:mgmt:set-owner` - Set new owner
+- `npm run neo:mgmt:set-relayer` - Set new relayer
+- `npm run neo:mgmt:set-governor` - Set new governor
+- `npm run neo:mgmt:set-security` - Set new security guard
 
 ## Required Environment Variables
 
 - `MANAGEMENT_CONTRACT_HASH` - Contract hash of the Management contract
 - `NEO_NODE_URL` - RPC URL of the Neo node
-- `WALLET_PATH` - Path to the wallet file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to the wallet file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 - For `ownerRelayerGovernor.ts`: `MANAGEMENT_ACTION` (set-owner, set-relayer, set-governor, set-security-guard), corresponding `NEW_OWNER`, `NEW_RELAYER`, `NEW_GOVERNOR`, `NEW_SECURITY_GUARD`

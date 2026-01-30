@@ -9,12 +9,12 @@ This directory contains examples for interacting with Neo wallets, including loa
 ## Available Scripts
 
 ### Wallet Operations
-- `npm run wallet:operations` - Run wallet operations (load, decrypt, display balances, etc.)
+- `npm run neo:wallet` - Run wallet operations (load, decrypt, display balances, etc.)
 
 ## Required Environment Variables
 
-- `WALLET_PATH` - Path to the Neo wallet file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to the Neo wallet file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 - `NEO_NODE_URL` - RPC URL of the Neo node
 
 ## Features

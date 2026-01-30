@@ -1,7 +1,7 @@
 import { createTokenBridgeFromEnvironment, ensureEnv } from "../utils";
-import { TokenBridge } from "@bane-labs/bridge-sdk-ts";
+import { NeoTokenBridge } from "@bane-labs/bridge-sdk-ts";
 
-async function tokenBridgeOperations(tokenBridge: TokenBridge) {
+async function tokenBridgeOperations(tokenBridge: NeoTokenBridge) {
     console.log("\n--- Testing Token Bridge Operations ---");
 
     const operation = process.env.TOKEN_OPERATION;
@@ -47,7 +47,7 @@ async function tokenBridgeOperations(tokenBridge: TokenBridge) {
     }
 }
 
-async function registerToken(tokenBridge: TokenBridge) {
+async function registerToken(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     if (!token) {
         throw new Error('TOKEN_ADDRESS environment variable is required');
@@ -79,7 +79,7 @@ async function registerToken(tokenBridge: TokenBridge) {
     console.log(`Token registered. Transaction: ${result.txHash}`);
 }
 
-async function depositToken(tokenBridge: TokenBridge) {
+async function depositToken(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const from = tokenBridge.getConfig().account.scriptHash;
     const to = process.env.TOKEN_TO_ADDRESS;
@@ -105,7 +105,7 @@ async function depositToken(tokenBridge: TokenBridge) {
     console.log(`Token deposit completed. Transaction: ${result.txHash}`);
 }
 
-async function claimToken(tokenBridge: TokenBridge) {
+async function claimToken(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const nonce = process.env.TOKEN_CLAIM_NONCE;
 
@@ -120,7 +120,7 @@ async function claimToken(tokenBridge: TokenBridge) {
     console.log(`Token claim completed. Transaction: ${result.txHash}`);
 }
 
-async function pauseTokenBridge(tokenBridge: TokenBridge) {
+async function pauseTokenBridge(tokenBridge: NeoTokenBridge) {
     const neoN3Token = process.env.TOKEN_ADDRESS;
     if (!neoN3Token) {
         throw new Error('TOKEN_ADDRESS environment variable is required');
@@ -131,7 +131,7 @@ async function pauseTokenBridge(tokenBridge: TokenBridge) {
     console.log(`Token bridge paused. Transaction: ${result.txHash}`);
 }
 
-async function unpauseTokenBridge(tokenBridge: TokenBridge) {
+async function unpauseTokenBridge(tokenBridge: NeoTokenBridge) {
     const neoN3Token = process.env.TOKEN_ADDRESS;
     if (!neoN3Token) {
         throw new Error('TOKEN_ADDRESS environment variable is required');
@@ -142,7 +142,7 @@ async function unpauseTokenBridge(tokenBridge: TokenBridge) {
     console.log(`Token bridge unpaused. Transaction: ${result.txHash}`);
 }
 
-async function setTokenDepositFee(tokenBridge: TokenBridge) {
+async function setTokenDepositFee(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newFee = process.env.NEW_TOKEN_DEPOSIT_FEE;
 
@@ -163,7 +163,7 @@ async function setTokenDepositFee(tokenBridge: TokenBridge) {
     console.log(`Token deposit fee updated. Transaction: ${result.txHash}`);
 }
 
-async function setMinTokenDeposit(tokenBridge: TokenBridge) {
+async function setMinTokenDeposit(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newMinDeposit = process.env.NEW_MIN_TOKEN_DEPOSIT;
 
@@ -181,7 +181,7 @@ async function setMinTokenDeposit(tokenBridge: TokenBridge) {
     console.log(`Minimum token deposit updated. Transaction: ${result.txHash}`);
 }
 
-async function setMaxTokenDeposit(tokenBridge: TokenBridge) {
+async function setMaxTokenDeposit(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newMaxDeposit = process.env.NEW_MAX_TOKEN_DEPOSIT;
 
@@ -199,7 +199,7 @@ async function setMaxTokenDeposit(tokenBridge: TokenBridge) {
     console.log(`Maximum token deposit updated. Transaction: ${result.txHash}`);
 }
 
-async function setMaxTokenWithdrawals(tokenBridge: TokenBridge) {
+async function setMaxTokenWithdrawals(tokenBridge: NeoTokenBridge) {
     const token = process.env.TOKEN_ADDRESS;
     const newMaxWithdrawals = process.env.NEW_MAX_TOKEN_WITHDRAWALS;
 

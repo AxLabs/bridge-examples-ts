@@ -1,13 +1,13 @@
 import {
-    GenericError,
-    MessageBridge,
-    type SendExecutableMessageParams,
-    type SendResultMessageParams,
-    type SendStoreOnlyMessageParams
+    NeoGenericError,
+    NeoMessageBridge,
+    type NeoSendExecutableMessageParams,
+    type NeoSendResultMessageParams,
+    type NeoSendStoreOnlyMessageParams
 } from "@bane-labs/bridge-sdk-ts";
 import { createMessageBridgeFromEnvironment, ensureEnv } from "../utils";
 
-async function sendExecutableMessage(messageBridge: MessageBridge) {
+async function sendExecutableMessage(messageBridge: NeoMessageBridge) {
     const messageData = process.env.MESSAGE_EXECUTABLE_DATA;
     if (!messageData) {
         throw new Error('MESSAGE_EXECUTABLE_DATA environment variable is required for executable messages');
@@ -17,7 +17,7 @@ async function sendExecutableMessage(messageBridge: MessageBridge) {
 
     const sendingFee = await messageBridge.sendingFee();
 
-    const params: SendExecutableMessageParams = {
+    const params: NeoSendExecutableMessageParams = {
         messageData,
         storeResult,
         maxFee: sendingFee
@@ -27,7 +27,7 @@ async function sendExecutableMessage(messageBridge: MessageBridge) {
     console.log('Executable message sent successfully:', result.txHash);
 }
 
-async function sendResultMessage(messageBridge: MessageBridge) {
+async function sendResultMessage(messageBridge: NeoMessageBridge) {
     const nonce = process.env.MESSAGE_NONCE;
     if (!nonce) {
         throw new Error('MESSAGE_NONCE environment variable is required for result messages');
@@ -35,7 +35,7 @@ async function sendResultMessage(messageBridge: MessageBridge) {
 
     const sendingFee = await messageBridge.sendingFee();
 
-    const params: SendResultMessageParams = {
+    const params: NeoSendResultMessageParams = {
         nonce: parseInt(nonce, 10),
         maxFee: sendingFee
     };
@@ -44,15 +44,15 @@ async function sendResultMessage(messageBridge: MessageBridge) {
     console.log('Result message sent successfully:', result.txHash);
 }
 
-async function sendStoreOnlyMessage(messageBridge: MessageBridge) {
+async function sendStoreOnlyMessage(messageBridge: NeoMessageBridge) {
     const messageData = process.env.MESSAGE_STORE_ONLY_DATA;
     if (!messageData) {
-        throw new GenericError('MESSAGE_STORE_ONLY_DATA environment variable is required for store-only messages');
+        throw new NeoGenericError('MESSAGE_STORE_ONLY_DATA environment variable is required for store-only messages');
     }
 
     const sendingFee = await messageBridge.sendingFee();
 
-    const params: SendStoreOnlyMessageParams = {
+    const params: NeoSendStoreOnlyMessageParams = {
         messageData,
         maxFee: sendingFee
     };

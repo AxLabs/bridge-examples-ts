@@ -1,7 +1,7 @@
-import { MessageBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
+import { NeoMessageBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
 import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
-async function performAllPauseOperations(messageBridge: MessageBridge) {
+async function performAllPauseOperations(messageBridge: NeoMessageBridge) {
     console.log("\n--- Testing All Pause/Unpause Operations ---");
 
     // Get block time estimate if available from the rpcClient
@@ -72,7 +72,7 @@ async function performAllPauseOperations(messageBridge: MessageBridge) {
     }
 }
 
-async function logPauseStates(messageBridge: MessageBridge) {
+async function logPauseStates(messageBridge: NeoMessageBridge) {
     try {
         const isPaused = await messageBridge.isPaused();
         const sendingIsPaused = await messageBridge.sendingIsPaused();

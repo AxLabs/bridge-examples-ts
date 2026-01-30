@@ -1,7 +1,7 @@
-import { ExecutionManager, neonAdapter } from "@bane-labs/bridge-sdk-ts";
+import { NeoExecutionManager, neonAdapter } from "@bane-labs/bridge-sdk-ts";
 import { createExecutionManagerFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
-async function performPauseOperations(executionManager: ExecutionManager) {
+async function performPauseOperations(executionManager: NeoExecutionManager) {
     console.log("\n--- Testing ExecutionManager Pause/Unpause Operations ---");
 
     const config = executionManager.getConfig();
@@ -35,7 +35,7 @@ async function performPauseOperations(executionManager: ExecutionManager) {
     }
 }
 
-async function logPauseState(executionManager: ExecutionManager): Promise<boolean> {
+async function logPauseState(executionManager: NeoExecutionManager): Promise<boolean> {
     try {
         const isPaused = await executionManager.isPaused();
         console.log(`  ExecutionManager Paused: ${isPaused}`);

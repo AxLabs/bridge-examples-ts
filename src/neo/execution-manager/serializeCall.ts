@@ -1,7 +1,7 @@
-import { ExecutionManager } from "@bane-labs/bridge-sdk-ts";
+import { NeoExecutionManager } from "@bane-labs/bridge-sdk-ts";
 import { createExecutionManagerFromEnvironment, ensureEnv } from "../utils";
 
-async function serializeCallExamples(executionManager: ExecutionManager) {
+async function serializeCallExamples(executionManager: NeoExecutionManager) {
     console.log("\n--- Testing ExecutionManager Serialization Methods ---");
 
     const target = process.env.SERIALIZE_TARGET || process.env.MESSAGE_BRIDGE_CONTRACT_HASH;

@@ -6,16 +6,16 @@
  * Required environment variables:
  * - TOKEN_BRIDGE_CONTRACT_HASH: The contract hash of the Token Bridge
  * - NEO_NODE_URL: The RPC URL of the Neo node
- * - WALLET_PATH: Path to the wallet file
- * - WALLET_PASSWORD: Password for the wallet (if encrypted)
+ * - NEO_WALLET_PATH: Path to the wallet file
+ * - NEO_WALLET_PASSWORD: Password for the wallet (if encrypted)
  *
  * Usage:
  *   npm run tb:readonly
  */
 import { createTokenBridgeFromEnvironment, ensureEnv } from "../utils";
-import { TokenBridge } from "@bane-labs/bridge-sdk-ts";
+import { NeoTokenBridge } from "@bane-labs/bridge-sdk-ts";
 
-export async function callReadOnlyMethods(tokenBridge: TokenBridge) {
+export async function callReadOnlyMethods(tokenBridge: NeoTokenBridge) {
     console.log("\n--- Testing Token Bridge Read-Only Methods ---");
 
     try {

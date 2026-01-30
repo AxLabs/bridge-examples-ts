@@ -1,7 +1,7 @@
-import { MessageBridge } from "@bane-labs/bridge-sdk-ts";
+import { NeoMessageBridge } from "@bane-labs/bridge-sdk-ts";
 import { createMessageBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
-async function setExecutionManager(messageBridge: MessageBridge) {
+async function setExecutionManager(messageBridge: NeoMessageBridge) {
     const executionManager = process.env.EXECUTION_MANAGER_ADDRESS;
 
     if (!executionManager) {
@@ -10,7 +10,7 @@ async function setExecutionManager(messageBridge: MessageBridge) {
 
     try {
         const oldExecutionManager = await messageBridge.executionManager();
-        console.log('Old execution manager is now set to:', executionManager);
+        console.log('Old execution manager is now set to:', oldExecutionManager);
 
         console.log(`Setting new execution manager: ${executionManager}`);
 
@@ -20,7 +20,7 @@ async function setExecutionManager(messageBridge: MessageBridge) {
         await waitForStateUpdate();
         // Get and log the execution result
         const newExecutionManager = await messageBridge.executionManager();
-        console.log('New execution manager is now set to:', executionManager);
+        console.log('New execution manager is now set to:', newExecutionManager);
     } catch (error: any) {
         console.error('Failed to execute message:', error instanceof Error ? error.message : error);
     }

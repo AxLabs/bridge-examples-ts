@@ -6,14 +6,14 @@
  * Required environment variables:
  * - NATIVE_BRIDGE_CONTRACT_HASH: The contract hash of the Native Bridge
  * - NEO_NODE_URL: The RPC URL of the Neo node
- * - WALLET_PATH: Path to the wallet file
- * - WALLET_PASSWORD: Password for the wallet (if encrypted)
+ * - NEO_WALLET_PATH: Path to the wallet file
+ * - NEO_WALLET_PASSWORD: Password for the wallet (if encrypted)
  *
  * Usage:
  *   npm run nb:readonly
  */
 import { createNativeBridgeFromEnvironment, ensureEnv } from "../utils";
-import { NativeBridge, getAllBalances, neonAdapter, type AssetBalance } from "@bane-labs/bridge-sdk-ts";
+import { NeoNativeBridge, getAllBalances, neonAdapter, type NeoAssetBalance } from "@bane-labs/bridge-sdk-ts";
 
 // Known token contract hashes
 const TOKEN_HASHES = neonAdapter.constants.NATIVE_CONTRACT_HASH;
@@ -30,7 +30,7 @@ function getTokenName(tokenHash: string): string {
     }
 }
 
-function displayBalances(balances: AssetBalance[]): void {
+function displayBalances(balances: NeoAssetBalance[]): void {
     balances.forEach((balance) => {
         if (balance && balance.assethash && balance.amount !== undefined) {
             const tokenName = getTokenName(balance.assethash);
@@ -45,10 +45,10 @@ async function checkBridgeBalances(bridgeAddress: string, rpcUrl: string): Promi
         console.log(`Bridge Address: ${bridgeAddress}`);
 
         const rpcClient = neonAdapter.create.rpcClient(rpcUrl);
-        const balances = await getAllBalances(rpcClient, bridgeAddress) as AssetBalance[];
+        const balances = await getAllBalances(rpcClient, bridgeAddress) as NeoAssetBalance[];
 
         if (balances && Array.isArray(balances) && balances.length > 0) {
-            const validBalances = balances.filter((balance): balance is AssetBalance =>
+            const validBalances = balances.filter((balance): balance is NeoAssetBalance =>
                 balance !== null &&
                 balance !== undefined &&
                 'assethash' in balance &&
@@ -72,7 +72,7 @@ async function checkBridgeBalances(bridgeAddress: string, rpcUrl: string): Promi
     }
 }
 
-export async function callReadOnlyMethods(nativeBridge: NativeBridge) {
+export async function callReadOnlyMethods(nativeBridge: NeoNativeBridge) {
     console.log("\n--- Testing Native Bridge Read-Only Methods ---");
 
     try {

@@ -1,7 +1,7 @@
-import { NativeBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
+import { NeoNativeBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
 import { createNativeBridgeFromEnvironment, ensureEnv, waitForStateUpdate } from "../utils";
 
-async function pauseOperations(nativeBridge: NativeBridge) {
+async function pauseOperations(nativeBridge: NeoNativeBridge) {
     console.log("\n--- Testing Native Bridge Pause/Unpause Operations ---");
 
     const config = nativeBridge.getConfig();
@@ -62,7 +62,7 @@ async function pauseOperations(nativeBridge: NativeBridge) {
     }
 }
 
-async function logPauseStates(nativeBridge: NativeBridge) {
+async function logPauseStates(nativeBridge: NeoNativeBridge) {
     try {
         const bridgeIsPaused = await nativeBridge.isPaused();
         console.log(`  Bridge Paused: ${bridgeIsPaused}`);
