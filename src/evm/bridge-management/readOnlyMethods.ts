@@ -44,7 +44,7 @@ async function main() {
     const { createBridgeManagementFromEnvironment } = await import("../utils");
 
     try {
-        const bridgeManagement = createBridgeManagementFromEnvironment();
+        const bridgeManagement = await createBridgeManagementFromEnvironment();
         await callReadOnlyMethods(bridgeManagement);
     } catch (error) {
         console.error("Failed to test EVM Bridge Management read-only methods:", error);

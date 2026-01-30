@@ -121,7 +121,7 @@ async function main() {
     const { createTokenBridgeFromEnvironment } = await import("../utils");
 
     try {
-        const tokenBridge = createTokenBridgeFromEnvironment();
+        const tokenBridge = await createTokenBridgeFromEnvironment();
         await callReadOnlyMethods(tokenBridge);
     } catch (error) {
         console.error("Failed to test EVM Token Bridge read-only methods:", error);

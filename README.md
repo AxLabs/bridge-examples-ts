@@ -32,13 +32,14 @@ See `env-template` for all required and optional variables.
 
 ### Neo Chain Variables
 - `NEO_NODE_URL` - RPC URL of the Neo node
-- `WALLET_PATH` - Path to your Neo wallet JSON file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to your Neo wallet JSON file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 - Contract-specific hashes (e.g., `MESSAGE_BRIDGE_CONTRACT_HASH`, `NATIVE_BRIDGE_CONTRACT_HASH`)
 
 ### EVM Chain Variables
 - `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
-- `EVM_PRIVATE_KEY` - Private key for the wallet (required for write operations)
+- `EVM_WALLET_PATH` - Path to your EVM wallet JSON file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 - Contract-specific addresses (e.g., `EVM_MESSAGE_BRIDGE_CONTRACT_ADDRESS`, `EVM_NATIVE_BRIDGE_CONTRACT_ADDRESS`)
 
 ### Operation-specific Variables

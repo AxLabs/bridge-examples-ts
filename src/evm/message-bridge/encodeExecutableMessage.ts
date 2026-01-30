@@ -40,7 +40,7 @@ async function encodeExecutableMessageExamples() {
         console.log("\n--- Testing Message Bridge State ---");
 
         // Test current message bridge state using actual available methods
-        const messageBridge = createMessageBridgeFromEnvironment();
+        const messageBridge = await createMessageBridgeFromEnvironment();
         const evmToNeoState = await messageBridge.evmToNeoState();
         console.log(`Current EVM to Neo state: nonce=${evmToNeoState.nonce}, root=${evmToNeoState.root}`);
 

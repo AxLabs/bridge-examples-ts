@@ -30,8 +30,8 @@ This directory contains examples for interacting with the Native Bridge contract
 
 - `NATIVE_BRIDGE_CONTRACT_HASH` - Contract hash of the Native Bridge
 - `NEO_NODE_URL` - RPC URL of the Neo node
-- `WALLET_PATH` - Path to the wallet file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to the wallet file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 See individual files for specific environment variables required for each operation.

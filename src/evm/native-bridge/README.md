@@ -30,7 +30,8 @@ This directory contains examples for interacting with the EVM Native Bridge cont
 
 - `EVM_NATIVE_BRIDGE_CONTRACT_ADDRESS` - Contract address of the EVM Native Bridge
 - `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
-- `EVM_PRIVATE_KEY` - Private key for the wallet (required for write operations)
+- `EVM_WALLET_PATH` - Path to the EVM wallet file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Optional Environment Variables for Testing
 - `NATIVE_CLAIM_NONCE` - Nonce to check for claimable native tokens (defaults to 1)

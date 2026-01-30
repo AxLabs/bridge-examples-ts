@@ -13,9 +13,7 @@ async function sendExecutableMessage(messageBridge: EvmMessageBridge) {
     const hash = await messageBridge.sendExecutableMessage(
         messageData as `0x${string}`,
         storeResult,
-        // {
-        //     value: sendingFee
-        // }
+        { value: sendingFee }
     );
 
     console.log('Executable message sent successfully. Transaction hash:', hash);
@@ -32,9 +30,9 @@ async function sendResultMessage(messageBridge: EvmMessageBridge) {
     console.log(`Sending fee: ${sendingFee} wei`);
 
     const hash = await messageBridge.sendResultMessage(nonce,
-        // {
-        //      value: sendingFee
-        // }
+        {
+             value: sendingFee
+        }
     );
 
     console.log('Result message sent successfully. Transaction hash:', hash);
@@ -50,9 +48,9 @@ async function sendStoreOnlyMessage(messageBridge: EvmMessageBridge) {
     console.log(`Sending fee: ${sendingFee} wei`);
 
     const hash = await messageBridge.sendStoreOnlyMessage(messageData as `0x${string}`,
-        // {
-        //     value: sendingFee
-        // }
+        {
+            value: sendingFee
+        }
     );
 
     console.log('Store-only message sent successfully. Transaction hash:', hash);
@@ -63,10 +61,10 @@ async function main() {
     ensureEnv();
 
     try {
-        const messageBridge = createMessageBridgeFromEnvironment();
+        const messageBridge = await createMessageBridgeFromEnvironment();
 
-        if (!process.env.EVM_PRIVATE_KEY) {
-            throw new Error('Wallet client is required for write operations. Please set EVM_PRIVATE_KEY environment variable.');
+        if (!process.env.EVM_WALLET_PATH) {
+            throw new Error('Wallet client is required for write operations. Please set EVM_WALLET_PATH environment variable.');
         }
 
         const operation = process.env.MESSAGE_BRIDGE_OPERATION;

@@ -27,7 +27,8 @@ This directory contains examples for interacting with the EVM Message Bridge con
 
 - `EVM_MESSAGE_BRIDGE_CONTRACT_ADDRESS` - Contract address of the EVM Message Bridge
 - `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
-- `EVM_PRIVATE_KEY` - Private key for the wallet (required for write operations)
+- `EVM_WALLET_PATH` - Path to the EVM wallet file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 - For `sendMessage.ts`: `MESSAGE_BRIDGE_OPERATION` (send-executable, send-result, send-store-only), `MESSAGE_EXECUTABLE_DATA`, `MESSAGE_STORE_RESULT` (boolean), `MESSAGE_NONCE` (for result), `MESSAGE_STORE_ONLY_DATA`

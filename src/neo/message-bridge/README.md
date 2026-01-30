@@ -29,8 +29,8 @@ This directory contains examples for interacting with the Message Bridge contrac
 
 - `MESSAGE_BRIDGE_CONTRACT_HASH` - Contract hash of the Message Bridge
 - `NEO_NODE_URL` - RPC URL of the Neo node
-- `WALLET_PATH` - Path to the wallet file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to the wallet file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 - For `sendMessage.ts`: `MESSAGE_BRIDGE_OPERATION` (send-executable, send-result, send-store-only), `MESSAGE_EXECUTABLE_DATA`, `MESSAGE_STORE_RESULT` (boolean), `MESSAGE_NONCE` (for result), `MESSAGE_STORE_ONLY_DATA`

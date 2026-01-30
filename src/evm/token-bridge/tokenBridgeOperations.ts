@@ -10,7 +10,7 @@ async function tokenBridgeOperations() {
         return;
     }
 
-    const tokenBridge = createTokenBridgeFromEnvironment();
+    const tokenBridge = await createTokenBridgeFromEnvironment();
 
     try {
         switch (operation) {

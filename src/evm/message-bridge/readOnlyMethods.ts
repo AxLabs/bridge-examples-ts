@@ -57,7 +57,7 @@ async function main() {
     const { createMessageBridgeFromEnvironment } = await import("../utils");
 
     try {
-        const messageBridge = createMessageBridgeFromEnvironment();
+        const messageBridge = await createMessageBridgeFromEnvironment();
         await callReadOnlyMethods(messageBridge);
     } catch (error) {
         console.error("Failed to test EVM Message Bridge read-only methods:", error);

@@ -70,8 +70,8 @@ export async function createNativeTokenBridgeFromEnvironment(): Promise<NeoNativ
 export async function createManagementFromEnvironment(): Promise<NeoBridgeManagement> {
     const contractHash = process.env.BRIDGE_MANAGEMENT_CONTRACT_HASH;
     const rpcUrl = process.env.NEO_NODE_URL;
-    const walletPath = process.env.WALLET_PATH;
-    const walletPassword = process.env.WALLET_PASSWORD || '';
+    const walletPath = process.env.NEO_WALLET_PATH;
+    const walletPassword = process.env.NEO_WALLET_PASSWORD || '';
 
     if (!contractHash) {
         throw new NeoGenericError('BRIDGE_MANAGEMENT_CONTRACT_HASH environment variable is required', 'MISSING_CONTRACT_HASH');
@@ -80,7 +80,7 @@ export async function createManagementFromEnvironment(): Promise<NeoBridgeManage
         throw new NeoGenericError('NEO_NODE_URL environment variable is required', 'MISSING_RPC_URL');
     }
     if (!walletPath) {
-        throw new NeoGenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
+        throw new NeoGenericError('NEO_WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
     }
 
     const account = await createDecryptedAccountFromWalletFile(walletPath, walletPassword);
@@ -97,12 +97,12 @@ export function waitForStateUpdate(waitMs: number = 1000): Promise<void> {
 }
 
 async function createContractWrapperConfigFromEnv(contractHash: string) {
-    const walletPath = process.env.WALLET_PATH;
+    const walletPath = process.env.NEO_WALLET_PATH;
     if (!walletPath) {
-        throw new NeoGenericError('WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
+        throw new NeoGenericError('NEO_WALLET_PATH environment variable is required', 'MISSING_WALLET_PATH');
     }
 
-    const walletPassword = process.env.WALLET_PASSWORD || '';
+    const walletPassword = process.env.NEO_WALLET_PASSWORD || '';
     const rpcUrl = process.env.NEO_NODE_URL;
 
     let account: Account | null;
@@ -113,7 +113,7 @@ async function createContractWrapperConfigFromEnv(contractHash: string) {
 
         if (account && (account.tryGet("encrypted") || account.tryGet("WIF"))) {
             throw new NeoGenericError(
-                'Wallet contains encrypted private key but no WALLET_PASSWORD environment variable provided. Please set WALLET_PASSWORD to decrypt the wallet.',
+                'Wallet contains encrypted private key but no NEO_WALLET_PASSWORD environment variable provided. Please set NEO_WALLET_PASSWORD to decrypt the wallet.',
                 'ENCRYPTED_WALLET_NO_PASSWORD'
             );
         }
