@@ -1,10 +1,20 @@
 NEO_NODE_URL=http://localhost:40332
 
-#Conrtract hashes
+# EVM Configuration
+EVM_RPC_URL=http://localhost:8562
+
+# Neo Contract hashes
 MESSAGE_BRIDGE_CONTRACT_HASH=bd98300a1951d72533fa749010265f71c4cfff38
 BRIDGE_MANAGEMENT_CONTRACT_HASH=f0e6bccc463fa39fb21c4d0b69c2c279cd3d12d9
 EXECUTION_MANAGER_CONTRACT_HASH=0xa4cda6c7b19c7e06ad702f1bc7e20ecc21e0a050
 NATIVE_TOKEN_BRIDGE_CONTRACT_HASH=0x356376dcd5580f49f8b4d1274745ac55ad858784
+
+# EVM Contract addresses
+EVM_MESSAGE_BRIDGE_CONTRACT_ADDRESS=
+EVM_EXECUTION_MANAGER_CONTRACT_ADDRESS=
+EVM_NATIVE_BRIDGE_CONTRACT_ADDRESS=
+EVM_TOKEN_BRIDGE_CONTRACT_ADDRESS=
+EVM_BRIDGE_MANAGEMENT_CONTRACT_ADDRESS=
 
 # Validator public keys
 VALIDATOR_PUBLIC_KEY=0x02a0150e31043503248d2e3cb1e55011062d19a02a2da82f3cb55d9a1b967a601d
@@ -80,7 +90,10 @@ NEW_MIN_TOKEN_DEPOSIT=... # New minimum token deposit
 NEW_MAX_TOKEN_DEPOSIT=... # New maximum token deposit
 NEW_MAX_TOKEN_WITHDRAWALS=... # New maximum token withdrawals
 
-# pausing will only work if this is the governor account
-# changing validator will only work if this is the owner account
-WALLET_PATH=../neon3-funding/neon3-wallets/personal.json
-WALLET_PASSWORD=
+# Neo wallet configuration
+NEO_WALLET_PATH=../neon3-funding/neon3-wallets/personal.json
+NEO_WALLET_PASSWORD=
+
+# EVM wallet configuration
+EVM_WALLET_PATH=../neox-funding/neox-wallets/personal.json
+EVM_WALLET_PASSWORD=

@@ -1,0 +1,65 @@
+# EVM Native Bridge Examples
+
+This directory contains examples for interacting with the EVM Native Bridge contract, which handles native token bridging operations between EVM and Neo.
+
+## Files
+
+- `nativeBridgeOperations.ts` - Native bridge management operations (set, deposit, claim, pause/unpause, fee management)
+- `pauseOperations.ts` - Bridge and deposits pause/unpause operations testing
+- `readOnlyMethods.ts` - Comprehensive read-only queries for bridge state, configuration, and NEP-17 token balances
+
+## Available Scripts
+
+### Native Bridge Operations
+- `npm run evm:nb:operations` - Interactive operations based on NATIVE_OPERATION env var
+- `npm run evm:nb:readonly` - Display comprehensive bridge state, configuration, and NEP-17 token balances
+- `npm run evm:nb:pause` - Test pause/unpause operations
+
+### Specific Native Operations
+- `npm run evm:nb:set` - Set native bridge configuration
+- `npm run evm:nb:deposit` - Deposit native tokens
+- `npm run evm:nb:claim` - Claim native tokens
+- `npm run evm:nb:pause-bridge` - Pause the native bridge
+- `npm run evm:nb:unpause-bridge` - Unpause the native bridge
+- `npm run evm:nb:set-fee` - Set native deposit fee
+- `npm run evm:nb:set-min` - Set minimum native deposit amount
+- `npm run evm:nb:set-max` - Set maximum native deposit amount
+- `npm run evm:nb:set-total` - Set maximum total deposited native amount
+
+## Required Environment Variables
+
+- `EVM_NATIVE_BRIDGE_CONTRACT_ADDRESS` - Contract address of the EVM Native Bridge
+- `EVM_RPC_URL` - RPC URL of the EVM node (defaults to http://localhost:8545)
+- `EVM_WALLET_PATH` - Path to the EVM wallet file
+- `EVM_WALLET_PASSWORD` - Password for the wallet (if encrypted)
+
+### Optional Environment Variables for Testing
+- `NATIVE_CLAIM_NONCE` - Nonce to check for claimable native tokens (defaults to 1)
+
+## Available Information
+
+The read-only methods provide access to:
+
+### Bridge Status
+- Bridge setup status (`nativeBridgeIsSet()`)
+- Bridge pause status (`bridgePaused`)
+- Native bridge specific pause status
+- Management contract address
+- Unclaimed rewards
+
+### Native Bridge Configuration
+- Fee amount (withdrawal fee)
+- Minimum and maximum withdrawal amounts
+- Maximum number of deposits allowed
+- Decimal scaling factor for cross-chain compatibility
+
+### State Information
+- Deposit state (EVM to Neo): current nonce and merkle root
+- Withdrawal state (Neo to EVM): current nonce and merkle root
+- Claimable native tokens for specific nonces
+
+### Usage Notes
+
+- If the native bridge is not set up (`nativeBridgeIsSet()` returns false), only basic bridge information will be available
+- The native bridge struct contains comprehensive configuration and state information
+- Claimable tokens can be queried by nonce, but will return empty results if no tokens are claimable for that nonce

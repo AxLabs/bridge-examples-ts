@@ -1,7 +1,7 @@
-import { ContractParamType, MessageBridge, neonAdapter } from "@bane-labs/bridge-sdk-ts";
+import { NeoMessageBridge } from "@bane-labs/bridge-sdk-ts";
 import { createMessageBridgeFromEnvironment, ensureEnv } from "../utils";
 
-async function serializeIsPausedCall(messageBridge: MessageBridge) {
+async function serializeIsPausedCall(messageBridge: NeoMessageBridge) {
     const contractHash = process.env.MESSAGE_BRIDGE_CONTRACT_HASH;
 
     if (!contractHash) {

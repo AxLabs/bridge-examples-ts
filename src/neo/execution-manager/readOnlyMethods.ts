@@ -6,8 +6,8 @@
  * Required environment variables:
  * - EXECUTION_MANAGER_CONTRACT_HASH: The contract hash of the ExecutionManager
  * - NEO_NODE_URL: The RPC URL of the Neo node
- * - WALLET_PATH: Path to the wallet file
- * - WALLET_PASSWORD: Password for the wallet (if encrypted)
+ * - NEO_WALLET_PATH: Path to the wallet file
+ * - NEO_WALLET_PASSWORD: Password for the wallet (if encrypted)
  *
  * Optional environment variables:
  * - MESSAGE_BRIDGE_CONTRACT_HASH: Used for testing serialization methods
@@ -16,10 +16,10 @@
  *   npm run em:readonly
  */
 
-import { ExecutionManager } from "@bane-labs/bridge-sdk-ts";
+import { NeoExecutionManager } from "@bane-labs/bridge-sdk-ts";
 import { createExecutionManagerFromEnvironment, ensureEnv } from "../utils";
 
-export async function callReadOnlyMethods(executionManager: ExecutionManager) {
+export async function callReadOnlyMethods(executionManager: NeoExecutionManager) {
     console.log("\n--- Testing ExecutionManager Read-Only Methods ---");
 
     try {

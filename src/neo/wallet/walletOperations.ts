@@ -1,6 +1,6 @@
 import {
-    type AssetBalance,
-    type BalanceResponse,
+    type NeoAssetBalance,
+    type NeoBalanceResponse,
     createAccountFromWalletFile,
     createDecryptedAccountFromWalletFile,
     createWalletFromFile,
@@ -12,7 +12,7 @@ import { ensureEnv } from "../utils";
 // Type definitions for better type safety
 interface BalanceCache {
     [address: string]: {
-        balances: AssetBalance[];
+        balances: NeoAssetBalance[];
         timestamp: number;
     };
 }
@@ -49,7 +49,7 @@ function isCacheValid(address: string): boolean {
     return cached && (Date.now() - cached.timestamp) < CACHE_DURATION;
 }
 
-export function displayBalances(balances: AssetBalance[]): void {
+export function displayBalances(balances: NeoAssetBalance[]): void {
     balances.forEach((balance) => {
         if (balance && balance.assethash && balance.amount !== undefined) {
             const tokenName = getTokenName(balance.assethash);
@@ -86,13 +86,13 @@ async function checkAccountBalances(accountAddress: string, rpcUrl: string, acco
         }
 
         const rpcClient = neonAdapter.create.rpcClient(rpcUrl);
-        const balances = await getAllBalances(rpcClient, accountAddress) as AssetBalance[];
+        const balances = await getAllBalances(rpcClient, accountAddress) as NeoAssetBalance[];
 
         console.log("Account Balances:");
 
         if (balances && Array.isArray(balances) && balances.length > 0) {
             // Validate balance structure for type safety
-            const validBalances = balances.filter((balance): balance is AssetBalance =>
+            const validBalances = balances.filter((balance): balance is NeoAssetBalance =>
                 balance !== null &&
                 balance !== undefined &&
                 'assethash' in balance &&
@@ -122,15 +122,15 @@ async function checkAccountBalances(accountAddress: string, rpcUrl: string, acco
 }
 
 // Export types for external use
-export type { AssetBalance, BalanceResponse, BalanceCache, AccountInfo };
+export type { NeoAssetBalance, NeoBalanceResponse, BalanceCache, AccountInfo };
 
 export async function testWalletOperations(): Promise<void> {
-    const walletPath = process.env.WALLET_PATH;
-    const walletPassword = process.env.WALLET_PASSWORD;
+    const walletPath = process.env.NEO_WALLET_PATH;
+    const walletPassword = process.env.NEO_WALLET_PASSWORD;
     const rpcUrl = process.env.NEO_NODE_URL;
 
     if (!walletPath) {
-        console.error('ERROR: No WALLET_PATH environment variable set. Please set it to load a wallet.');
+        console.error('ERROR: No NEO_WALLET_PATH environment variable set. Please set it to load a wallet.');
         return;
     }
     if (!rpcUrl) {

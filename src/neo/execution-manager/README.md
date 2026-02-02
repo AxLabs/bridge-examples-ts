@@ -12,17 +12,18 @@ This directory contains examples for interacting with the ExecutionManager contr
 ## Available Scripts
 
 ### Execution Manager Operations
-- `npm run em:execute` - Execute a message using MESSAGE_NONCE and EXECUTABLE_CODE
-- `npm run em:readonly` - Read all execution manager state information
-- `npm run em:pause` - Test pause/unpause operations
-- `npm run em:serialize` - Test serialization and validation methods
+- `npm run neo:em:execute` - Execute a message using MESSAGE_NONCE and EXECUTABLE_CODE
+- `npm run neo:em:readonly` - Read all execution manager state information
+- `npm run neo:em:pause` - Test pause/unpause operations
+- `npm run neo:em:serialize` - Test serialization and validation methods
+- `npm run neo:em:serialize-pause` - Test serialization of isPaused method
 
 ## Required Environment Variables
 
 - `EXECUTION_MANAGER_CONTRACT_HASH` - Contract hash of the ExecutionManager
 - `NEO_NODE_URL` - RPC URL of the Neo node
-- `WALLET_PATH` - Path to the wallet file
-- `WALLET_PASSWORD` - Password for the wallet (if encrypted)
+- `NEO_WALLET_PATH` - Path to the wallet file
+- `NEO_WALLET_PASSWORD` - Password for the wallet (if encrypted)
 
 ### Operation-specific Variables
 - For `executeMessage.ts`: `MESSAGE_NONCE` (integer), `EXECUTABLE_CODE`
