@@ -1,4 +1,4 @@
-import { createMessageBridgeFromEnvironment, ensureEnv } from "../utils";
+import { createMessageBridgeFromEnvironment, ensureEnv, createEvmContractWrapperConfig } from "../utils";
 import { encodeFunctionData, encodeAbiParameters, isAddress } from 'viem';
 
 async function encodeExecutableMessageExamples() {
@@ -95,23 +95,60 @@ function encodeEvmCall(target: string, storeResult: boolean, value: bigint, call
 // Test the encoded function call
 async function callViewFunction(contractAddress: string, encodedCallData: string) {
     try {
-        // Note: This would require a viem public client
-        // For now, we'll log what would be called
-        console.log(`Would call contract ${contractAddress} with data: ${encodedCallData}`);
-        console.log("Note: To actually execute this call, you would need a viem public client");
-        console.log("Example: const result = await publicClient.call({ to: contractAddress, data: encodedCallData });");
+        console.log(`Calling contract ${contractAddress} with data: ${encodedCallData}`);
+
+        // Create public client from utils
+        const config = await createEvmContractWrapperConfig(contractAddress as `0x${string}`);
+        const publicClient = config.publicClient;
+
+        // Make the actual call
+        const result = await publicClient.call({
+            to: contractAddress as `0x${string}`,
+            data: encodedCallData as `0x${string}`
+        });
+
+        console.log("View function call result:", result);
+
+        // Try to decode the result as uint256 for balanceOf
+        if (result.data && result.data !== '0x') {
+            try {
+                const balance = BigInt(result.data);
+                console.log("Decoded balance:", balance.toString());
+            } catch (decodeError) {
+                console.log("Could not decode result as uint256:", result.data);
+            }
+        } else {
+            console.log("No data returned from call");
+        }
+
     } catch (error) {
-        console.log("Could not test view function call:", error instanceof Error ? error.message : error);
+        console.log("View function call failed:", error instanceof Error ? error.message : error);
     }
 }
 
 // Check if address is a contract using viem
 async function isContract(address: string): Promise<boolean> {
     try {
-        // Use viem's address validation
+        // First validate the address format
         const isValidAddress = isAddress(address);
-        console.log(`Address validation: ${isValidAddress}`);
-        return isValidAddress;
+        if (!isValidAddress) {
+            console.log(`Invalid address format: ${address}`);
+            return false;
+        }
+
+        // Create public client to check if address has code
+        const config = await createEvmContractWrapperConfig(address as `0x${string}`);
+        const publicClient = config.publicClient;
+
+        const code = await publicClient.getBytecode({
+            address: address as `0x${string}`
+        });
+
+        const hasCode = !!(code && code !== '0x' && code.length > 2);
+        console.log(`Address ${address} has bytecode: ${hasCode}`);
+        console.log(`Bytecode length: ${code ? code.length : 0} characters`);
+
+        return hasCode;
     } catch (error) {
         console.log("Could not verify contract:", error instanceof Error ? error.message : error);
         return false;
