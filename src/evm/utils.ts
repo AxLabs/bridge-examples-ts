@@ -7,15 +7,33 @@ import {
     EvmBridgeManagement, EvmMessageBridgeFactory, EvmNativeBridgeFactory, EvmTokenBridgeFactory,
     EvmExecutionManagerFactory, EvmBridgeManagementFactory
 } from "@bane-labs/bridge-sdk-ts";
-import { createPublicClient, createWalletClient, http, type Address, PrivateKeyAccount } from 'viem';
+import { createPublicClient, createWalletClient, http, type Address, PrivateKeyAccount, defineChain } from 'viem';
 import { privateKeyToAccount, HDAccount } from 'viem/accounts';
-import { mainnet } from 'viem/chains';
 import * as fs from 'fs';
 import dotenv from "dotenv";
 
 export function ensureEnv() {
     dotenv.config();
 }
+
+function getRpcUrl(): string {
+    return process.env.EVM_RPC_URL || 'http://localhost:8562';
+}
+
+const customNeoX = defineChain({
+    id: 2312051126,
+    name: 'NeoX Custom',
+    nativeCurrency: {
+        decimals: 18,
+        name: 'GAS',
+        symbol: 'GAS',
+    },
+    rpcUrls: {
+        default: {
+            http: [getRpcUrl()],
+        },
+    },
+});
 
 async function createAccountFromWalletFile(walletPath: string, password: string): Promise<PrivateKeyAccount> {
     if (!fs.existsSync(walletPath)) {
@@ -33,10 +51,10 @@ async function createAccountFromWalletFile(walletPath: string, password: string)
 }
 
 export async function createEvmContractWrapperConfig(contractAddress: Address): Promise<EvmContractWrapperConfig> {
-    const rpcUrl = process.env.EVM_RPC_URL || 'http://localhost:8562';
+    const rpcUrl = getRpcUrl();
 
     const publicClient = createPublicClient({
-        chain: mainnet,
+        chain: customNeoX,
         transport: http(rpcUrl)
     });
 
@@ -50,7 +68,7 @@ export async function createEvmContractWrapperConfig(contractAddress: Address): 
             const account = await createAccountFromWalletFile(walletPath, walletPassword);
             walletClient = createWalletClient({
                 account,
-                chain: mainnet,
+                chain: customNeoX,
                 transport: http(rpcUrl)
             });
         } catch (error) {
