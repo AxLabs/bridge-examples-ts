@@ -1,7 +1,7 @@
 NEO_NODE_URL=http://localhost:40332
 
 # EVM Configuration
-EVM_RPC_URL=http://localhost:8545
+EVM_RPC_URL=http://localhost:8562
 
 # Neo Contract hashes
 MESSAGE_BRIDGE_CONTRACT_HASH=bd98300a1951d72533fa749010265f71c4cfff38

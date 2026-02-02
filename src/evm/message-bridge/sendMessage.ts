@@ -1,4 +1,5 @@
 import { EvmMessageBridge } from "@bane-labs/bridge-sdk-ts";
+import { stringToHex } from "viem";
 import { createMessageBridgeFromEnvironment, ensureEnv, requireEnvVar } from "../utils";
 
 async function sendExecutableMessage(messageBridge: EvmMessageBridge) {
@@ -41,16 +42,13 @@ async function sendResultMessage(messageBridge: EvmMessageBridge) {
 
 async function sendStoreOnlyMessage(messageBridge: EvmMessageBridge) {
     const messageData = requireEnvVar('MESSAGE_STORE_ONLY_DATA');
-
-    console.log(`Sending store-only message with data: ${messageData}`);
+    const hexMessageData = stringToHex(messageData);
+    console.log(`Sending store-only message with data: ${messageData} (hex: ${hexMessageData})`);
 
     const sendingFee = await messageBridge.sendingFee();
     console.log(`Sending fee: ${sendingFee} wei`);
 
-    const hash = await messageBridge.sendStoreOnlyMessage(messageData as `0x${string}`,
-        {
-            value: sendingFee
-        }
+    const hash = await messageBridge.sendStoreOnlyMessage(hexMessageData, {value: sendingFee}
     );
 
     console.log('Store-only message sent successfully. Transaction hash:', hash);
