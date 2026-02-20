@@ -1,10 +1,11 @@
 import { createNativeBridgeFromEnvironment, ensureEnv } from "../utils";
+import { type EvmNativeBridge } from "@bane-labs/bridge-sdk-ts";
 
 async function nativeBridgeOperations() {
     const operation = process.env.NATIVE_OPERATION;
     if (!operation) {
         console.error("Set NATIVE_OPERATION environment variable to specify operation.");
-        console.log("Available operations: set, deposit, claim, pause-bridge, unpause-bridge, set-fee, set-min, set-max, set-total");
+        console.log("Available operations: set, withdraw, claim, pause-bridge, unpause-bridge, set-fee, set-min, set-max, set-total");
         return;
     }
 
@@ -15,8 +16,8 @@ async function nativeBridgeOperations() {
             case 'set':
                 await setNativeBridge(nativeBridge);
                 break;
-            case 'deposit':
-                await depositNative(nativeBridge);
+            case 'withdraw':
+                await withdrawNative(nativeBridge);
                 break;
             case 'claim':
                 await claimNative(nativeBridge);
@@ -48,61 +49,63 @@ async function nativeBridgeOperations() {
     }
 }
 
-async function setNativeBridge(nativeBridge: any) {
-    const neoTokenAddress = process.env.NEO_TOKEN_ADDRESS;
-    const decimals = Number(process.env.NATIVE_DECIMALS || '18');
+async function setNativeBridge(nativeBridge: EvmNativeBridge) {
+    const fee = BigInt(process.env.NATIVE_DEPOSIT_FEE || '0');
+    const minAmount = BigInt(process.env.NATIVE_MIN_DEPOSIT || '1000000');
+    const maxAmount = BigInt(process.env.NATIVE_MAX_DEPOSIT || '1000000000000');
+    const maxDeposits = BigInt(process.env.NATIVE_MAX_WITHDRAWALS || '1000');
+    const decimalsHere = BigInt(process.env.NATIVE_DECIMALS || '18');
+    const decimalsOnN3 = BigInt(process.env.NATIVE_DECIMALS_LINKED_CHAIN || '18');
 
-    if (!neoTokenAddress) {
-        console.error('Missing NEO_TOKEN_ADDRESS');
-        return;
-    }
+    console.log('Setting native bridge with parameters:');
+    console.log(`Fee: ${fee}, Min: ${minAmount}, Max: ${maxAmount}, MaxDeposits: ${maxDeposits}`);
+    console.log(`DecimalsHere: ${decimalsHere}, DecimalsOnN3: ${decimalsOnN3}`);
 
-    console.log('Setting native bridge with Neo token address:', neoTokenAddress);
-    const tx = await nativeBridge.write.setNativeBridge([neoTokenAddress, decimals]);
+    const tx = await nativeBridge.setNativeBridge(fee, minAmount, maxAmount, maxDeposits, decimalsHere, decimalsOnN3);
     console.log('Set native bridge transaction:', tx);
 }
 
-async function depositNative(nativeBridge: any) {
+async function withdrawNative(nativeBridge: EvmNativeBridge) {
     const amount = process.env.NATIVE_AMOUNT;
     const recipient = process.env.NATIVE_RECIPIENT;
+    const maxFee = process.env.NATIVE_MAX_FEE;
 
-    if (!amount || !recipient) {
-        console.error('Missing NATIVE_AMOUNT or NATIVE_RECIPIENT');
+    if (!amount || !recipient || !maxFee) {
+        console.error('Missing NATIVE_AMOUNT, NATIVE_RECIPIENT, or NATIVE_MAX_FEE');
         return;
     }
 
-    console.log(`Depositing ${amount} native tokens to recipient: ${recipient}`);
-    const tx = await nativeBridge.write.depositNative([recipient], { value: BigInt(amount) });
-    console.log('Deposit native transaction:', tx);
+    console.log(`Withdrawing ${amount} native tokens to recipient: ${recipient}, maxFee: ${maxFee}`);
+    const tx = await nativeBridge.withdrawNative(recipient as `0x${string}`, BigInt(maxFee), { value: BigInt(amount) });
+    console.log('Withdraw native transaction:', tx);
 }
 
-async function claimNative(nativeBridge: any) {
+async function claimNative(nativeBridge: EvmNativeBridge) {
     const nonce = Number(process.env.NATIVE_CLAIM_NONCE);
-    const proof = process.env.NATIVE_CLAIM_PROOF;
 
-    if (!nonce || !proof) {
-        console.error('Missing NATIVE_CLAIM_NONCE or NATIVE_CLAIM_PROOF');
+    if (!nonce) {
+        console.error('Missing NATIVE_CLAIM_NONCE');
         return;
     }
 
     console.log(`Claiming native tokens for nonce: ${nonce}`);
-    const tx = await nativeBridge.write.claimNative([nonce, proof]);
+    const tx = await nativeBridge.claimNative(BigInt(nonce));
     console.log('Claim native transaction:', tx);
 }
 
-async function pauseNativeBridge(nativeBridge: any) {
+async function pauseNativeBridge(nativeBridge: EvmNativeBridge) {
     console.log('Pausing native bridge...');
-    const tx = await nativeBridge.write.pauseNativeBridge();
+    const tx = await nativeBridge.pauseNativeBridge();
     console.log('Pause native bridge transaction:', tx);
 }
 
-async function unpauseNativeBridge(nativeBridge: any) {
+async function unpauseNativeBridge(nativeBridge: EvmNativeBridge) {
     console.log('Unpausing native bridge...');
-    const tx = await nativeBridge.write.unpauseNativeBridge();
+    const tx = await nativeBridge.unpauseNativeBridge();
     console.log('Unpause native bridge transaction:', tx);
 }
 
-async function setNativeDepositFee(nativeBridge: any) {
+async function setNativeDepositFee(nativeBridge: EvmNativeBridge) {
     const fee = process.env.NATIVE_DEPOSIT_FEE;
 
     if (!fee) {
@@ -111,11 +114,11 @@ async function setNativeDepositFee(nativeBridge: any) {
     }
 
     console.log(`Setting native deposit fee to: ${fee}`);
-    const tx = await nativeBridge.write.setNativeDepositFee([BigInt(fee)]);
+    const tx = await nativeBridge.setNativeWithdrawalFee(BigInt(fee));
     console.log('Set native deposit fee transaction:', tx);
 }
 
-async function setMinNativeDeposit(nativeBridge: any) {
+async function setMinNativeDeposit(nativeBridge: EvmNativeBridge) {
     const minAmount = process.env.NATIVE_MIN_DEPOSIT;
 
     if (!minAmount) {
@@ -124,11 +127,11 @@ async function setMinNativeDeposit(nativeBridge: any) {
     }
 
     console.log(`Setting minimum native deposit to: ${minAmount}`);
-    const tx = await nativeBridge.write.setMinNativeDeposit([BigInt(minAmount)]);
+    const tx = await nativeBridge.setMinNativeWithdrawalAmount(BigInt(minAmount));
     console.log('Set minimum native deposit transaction:', tx);
 }
 
-async function setMaxNativeDeposit(nativeBridge: any) {
+async function setMaxNativeDeposit(nativeBridge: EvmNativeBridge) {
     const maxAmount = process.env.NATIVE_MAX_DEPOSIT;
 
     if (!maxAmount) {
@@ -137,11 +140,11 @@ async function setMaxNativeDeposit(nativeBridge: any) {
     }
 
     console.log(`Setting maximum native deposit to: ${maxAmount}`);
-    const tx = await nativeBridge.write.setMaxNativeDeposit([BigInt(maxAmount)]);
+    const tx = await nativeBridge.setMaxNativeWithdrawalAmount(BigInt(maxAmount));
     console.log('Set maximum native deposit transaction:', tx);
 }
 
-async function setMaxTotalDepositedNative(nativeBridge: any) {
+async function setMaxTotalDepositedNative(nativeBridge: EvmNativeBridge) {
     const maxTotal = process.env.NATIVE_MAX_TOTAL_DEPOSIT;
 
     if (!maxTotal) {
@@ -150,7 +153,7 @@ async function setMaxTotalDepositedNative(nativeBridge: any) {
     }
 
     console.log(`Setting maximum total deposited native to: ${maxTotal}`);
-    const tx = await nativeBridge.write.setMaxTotalDepositedNative([BigInt(maxTotal)]);
+    const tx = await nativeBridge.setMaxNativeDeposits(BigInt(maxTotal));
     console.log('Set maximum total deposited native transaction:', tx);
 }
 

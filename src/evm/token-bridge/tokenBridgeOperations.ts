@@ -1,4 +1,5 @@
 import { createTokenBridgeFromEnvironment, ensureEnv } from "../utils";
+import { type EvmTokenBridge } from "@bane-labs/bridge-sdk-ts";
 
 async function tokenBridgeOperations() {
     console.log("\n--- Testing EVM Token Bridge Operations ---");
@@ -6,7 +7,7 @@ async function tokenBridgeOperations() {
     const operation = process.env.TOKEN_OPERATION;
     if (!operation) {
         console.log("Set TOKEN_OPERATION environment variable to specify operation.");
-        console.log("Available operations: register, deposit, claim, pause, unpause, set-fee, set-min, set-max, set-withdrawals");
+        console.log("Available operations: register, withdraw, claim, pause, unpause, set-fee, set-min, set-max, set-withdrawals");
         return;
     }
 
@@ -17,8 +18,8 @@ async function tokenBridgeOperations() {
             case 'register':
                 await registerToken(tokenBridge);
                 break;
-            case 'deposit':
-                await depositToken(tokenBridge);
+            case 'withdraw':
+                await withdrawToken(tokenBridge);
                 break;
             case 'claim':
                 await claimToken(tokenBridge);
@@ -50,22 +51,35 @@ async function tokenBridgeOperations() {
     }
 }
 
-async function registerToken(tokenBridge: any) {
+async function registerToken(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
-    const neoTokenHash = process.env.NEO_TOKEN_HASH;
-    const decimals = Number(process.env.TOKEN_DECIMALS || '18');
+    const neoN3Token = process.env.NEO_N3_TOKEN_ADDRESS;
+    const fee = BigInt(process.env.TOKEN_DEPOSIT_FEE || '0');
+    const minAmount = BigInt(process.env.TOKEN_MIN_DEPOSIT || '1000000');
+    const maxAmount = BigInt(process.env.TOKEN_MAX_DEPOSIT || '1000000000000');
+    const maxDeposits = BigInt(process.env.TOKEN_MAX_WITHDRAWALS || '1000');
+    const decimalsLinkedChain = BigInt(process.env.TOKEN_DECIMALS_LINKED_CHAIN || '18');
 
-    if (!tokenAddress || !neoTokenHash) {
-        console.error('Missing TOKEN_ADDRESS or NEO_TOKEN_HASH');
+    if (!tokenAddress || !neoN3Token) {
+        console.error('Missing TOKEN_ADDRESS or NEO_N3_TOKEN_ADDRESS');
         return;
     }
 
-    console.log(`Registering token ${tokenAddress} with Neo hash ${neoTokenHash}`);
-    const tx = await tokenBridge.registerToken(tokenAddress, neoTokenHash, decimals);
+    const tokenConfig = {
+        neoN3Token: neoN3Token as `0x${string}`,
+        fee,
+        minAmount,
+        maxAmount,
+        maxDeposits,
+        decimalScalingFactor: decimalsLinkedChain
+    };
+
+    console.log(`Registering token ${tokenAddress} with Neo N3 token ${neoN3Token}`);
+    const tx = await tokenBridge.registerToken(tokenAddress as `0x${string}`, tokenConfig);
     console.log('Register token transaction:', tx);
 }
 
-async function depositToken(tokenBridge: any) {
+async function withdrawToken(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
     const amount = process.env.TOKEN_AMOUNT;
     const recipient = process.env.TOKEN_RECIPIENT;
@@ -75,27 +89,30 @@ async function depositToken(tokenBridge: any) {
         return;
     }
 
-    console.log(`Depositing ${amount} of token ${tokenAddress} to recipient: ${recipient}`);
-    const tx = await tokenBridge.depositToken(tokenAddress, BigInt(amount), recipient);
-    console.log('Deposit token transaction:', tx);
+    console.log(`Withdrawing ${amount} of token ${tokenAddress} to recipient: ${recipient}`);
+    const tx = await tokenBridge.withdrawToken(
+        tokenAddress as `0x${string}`,
+        recipient as `0x${string}`,
+        BigInt(amount)
+    );
+    console.log('Withdraw token transaction:', tx);
 }
 
-async function claimToken(tokenBridge: any) {
+async function claimToken(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
     const nonce = Number(process.env.TOKEN_CLAIM_NONCE);
-    const proof = process.env.TOKEN_CLAIM_PROOF;
 
-    if (!tokenAddress || !nonce || !proof) {
-        console.error('Missing TOKEN_ADDRESS, TOKEN_CLAIM_NONCE, or TOKEN_CLAIM_PROOF');
+    if (!tokenAddress || !nonce) {
+        console.error('Missing TOKEN_ADDRESS or TOKEN_CLAIM_NONCE');
         return;
     }
 
     console.log(`Claiming tokens for ${tokenAddress} at nonce: ${nonce}`);
-    const tx = await tokenBridge.claimToken(tokenAddress, nonce, proof);
+    const tx = await tokenBridge.claimToken(tokenAddress as `0x${string}`, BigInt(nonce));
     console.log('Claim token transaction:', tx);
 }
 
-async function pauseTokenBridge(tokenBridge: any) {
+async function pauseTokenBridge(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
 
     if (!tokenAddress) {
@@ -104,11 +121,11 @@ async function pauseTokenBridge(tokenBridge: any) {
     }
 
     console.log(`Pausing token bridge for ${tokenAddress}...`);
-    const tx = await tokenBridge.pauseTokenBridge(tokenAddress);
+    const tx = await tokenBridge.pauseTokenBridge(tokenAddress as `0x${string}`);
     console.log('Pause token bridge transaction:', tx);
 }
 
-async function unpauseTokenBridge(tokenBridge: any) {
+async function unpauseTokenBridge(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
 
     if (!tokenAddress) {
@@ -117,11 +134,11 @@ async function unpauseTokenBridge(tokenBridge: any) {
     }
 
     console.log(`Unpausing token bridge for ${tokenAddress}...`);
-    const tx = await tokenBridge.unpauseTokenBridge(tokenAddress);
+    const tx = await tokenBridge.unpauseTokenBridge(tokenAddress as `0x${string}`);
     console.log('Unpause token bridge transaction:', tx);
 }
 
-async function setTokenDepositFee(tokenBridge: any) {
+async function setTokenDepositFee(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
     const fee = process.env.TOKEN_DEPOSIT_FEE;
 
@@ -131,11 +148,11 @@ async function setTokenDepositFee(tokenBridge: any) {
     }
 
     console.log(`Setting deposit fee for ${tokenAddress} to: ${fee}`);
-    const tx = await tokenBridge.setTokenDepositFee(tokenAddress, BigInt(fee));
+    const tx = await tokenBridge.setTokenWithdrawalFee([tokenAddress as `0x${string}`], [BigInt(fee)]);
     console.log('Set token deposit fee transaction:', tx);
 }
 
-async function setMinTokenDeposit(tokenBridge: any) {
+async function setMinTokenDeposit(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
     const minAmount = process.env.TOKEN_MIN_DEPOSIT;
 
@@ -145,11 +162,11 @@ async function setMinTokenDeposit(tokenBridge: any) {
     }
 
     console.log(`Setting minimum deposit for ${tokenAddress} to: ${minAmount}`);
-    const tx = await tokenBridge.setMinTokenDeposit(tokenAddress, BigInt(minAmount));
+    const tx = await tokenBridge.setMinTokenWithdrawalAmount([tokenAddress as `0x${string}`], [BigInt(minAmount)]);
     console.log('Set minimum token deposit transaction:', tx);
 }
 
-async function setMaxTokenDeposit(tokenBridge: any) {
+async function setMaxTokenDeposit(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
     const maxAmount = process.env.TOKEN_MAX_DEPOSIT;
 
@@ -159,11 +176,11 @@ async function setMaxTokenDeposit(tokenBridge: any) {
     }
 
     console.log(`Setting maximum deposit for ${tokenAddress} to: ${maxAmount}`);
-    const tx = await tokenBridge.setMaxTokenDeposit(tokenAddress, BigInt(maxAmount));
+    const tx = await tokenBridge.setMaxTokenWithdrawalAmount([tokenAddress as `0x${string}`], [BigInt(maxAmount)]);
     console.log('Set maximum token deposit transaction:', tx);
 }
 
-async function setMaxTokenWithdrawals(tokenBridge: any) {
+async function setMaxTokenWithdrawals(tokenBridge: EvmTokenBridge) {
     const tokenAddress = process.env.TOKEN_ADDRESS;
     const maxWithdrawals = process.env.TOKEN_MAX_WITHDRAWALS;
 
@@ -173,7 +190,7 @@ async function setMaxTokenWithdrawals(tokenBridge: any) {
     }
 
     console.log(`Setting maximum withdrawals for ${tokenAddress} to: ${maxWithdrawals}`);
-    const tx = await tokenBridge.setMaxTokenWithdrawals(tokenAddress, Number(maxWithdrawals));
+    const tx = await tokenBridge.setMaxTokenDeposits([tokenAddress as `0x${string}`], [BigInt(maxWithdrawals)]);
     console.log('Set maximum token withdrawals transaction:', tx);
 }
 
