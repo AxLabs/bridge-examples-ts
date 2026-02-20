@@ -1,7 +1,7 @@
-import { MessageBridge } from "@bane-labs/bridge-sdk-ts";
+import { NeoMessageBridge } from "@bane-labs/bridge-sdk-ts";
 import { ensureEnv } from "../utils";
 
-export async function callReadOnlyMethods(messageBridge: MessageBridge) {
+export async function callReadOnlyMethods(messageBridge: NeoMessageBridge) {
     console.log("\n--- Testing Read-Only Methods ---");
 
     try {
